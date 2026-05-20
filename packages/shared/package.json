@@ -1,0 +1,22 @@
+{
+  "name": "@obsidiantfit/shared",
+  "version": "0.0.1",
+  "description": "Tipos, interfaces y lógica compartida entre backend y frontend",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

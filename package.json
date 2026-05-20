@@ -1,0 +1,26 @@
+{
+  "name": "obsidiantfit",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "Back",
+    "frontend",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run start:dev --workspace=Back",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev": "npm run dev:backend & npm run dev:frontend",
+    "build:backend": "npm run build --workspace=Back",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:shared": "npm run build --workspace=@obsidiantfit/shared",
+    "build": "npm run build:shared && npm run build:backend && npm run build:frontend",
+    "test": "npm run test --workspace=Back",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "npm run format --workspace=Back"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
