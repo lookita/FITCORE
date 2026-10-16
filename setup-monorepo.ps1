@@ -1,12 +1,12 @@
-# ObsidiantFit - Monorepo Setup Script
-# Ejecutar desde: ObsidiantFit/
+# FITCORE - Monorepo Setup Script
+# Ejecutar desde: FITCORE/ (o raíz del monorepo)
 # Uso: .\setup-monorepo.ps1
 
-Write-Host "Configurando monorepo ObsidiantFit..." -ForegroundColor Cyan
+Write-Host "Configurando monorepo FITCORE..." -ForegroundColor Cyan
 
 # 1. Verificar que estamos en la raiz correcta
 if (-not (Test-Path "package.json") -or -not (Test-Path "Back") -or -not (Test-Path "frontend")) {
-    Write-Error "Ejecuta este script desde la carpeta raiz ObsidiantFit/"
+    Write-Error "Ejecuta este script desde la carpeta raiz del monorepo"
     exit 1
 }
 
@@ -61,7 +61,7 @@ Write-Host "Compilando paquete shared..." -ForegroundColor Yellow
 npm run build:shared
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Error "Error al compilar @obsidiantfit/shared."
+    Write-Error "Error al compilar @fitcore/shared."
     exit 1
 }
 
@@ -70,18 +70,18 @@ Write-Host "OK: Paquete shared compilado." -ForegroundColor Green
 # 6. Resumen final
 Write-Host ""
 Write-Host "=============================================" -ForegroundColor Cyan
-Write-Host "  Monorepo ObsidiantFit configurado!" -ForegroundColor Green
+Write-Host "  Monorepo FITCORE configurado!" -ForegroundColor Green
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Comandos disponibles desde la raiz:" -ForegroundColor White
 Write-Host "  npm run dev:backend   -> NestJS con hot-reload" -ForegroundColor Gray
-Write-Host "  npm run dev:frontend  -> React + Vite" -ForegroundColor Gray
+Write-Host "  npm run dev:frontend  -> Frontend Vue/Vite" -ForegroundColor Gray
 Write-Host "  npm run build         -> Build completo" -ForegroundColor Gray
-Write-Host "  npm run test          -> Tests del backend" -ForegroundColor Gray
+Write-Host "  npm run test          -> Tests" -ForegroundColor Gray
 Write-Host "  npm run lint          -> Lint de todos los workspaces" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Paquetes en el monorepo:" -ForegroundColor White
-Write-Host "  @obsidiantfit/backend  -> Back/" -ForegroundColor Gray
-Write-Host "  @obsidiantfit/frontend -> frontend/" -ForegroundColor Gray
-Write-Host "  @obsidiantfit/shared   -> packages/shared/" -ForegroundColor Gray
+Write-Host "  @fitcore/backend  -> Back/" -ForegroundColor Gray
+Write-Host "  @fitcore/frontend -> Frontend/" -ForegroundColor Gray
+Write-Host "  @fitcore/shared   -> packages/shared/" -ForegroundColor Gray
 Write-Host ""

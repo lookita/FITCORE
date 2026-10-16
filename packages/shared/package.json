@@ -1,5 +1,5 @@
 {
-  "name": "@obsidiantfit/shared",
+  "name": "@fitcore/shared",
   "version": "0.0.1",
   "description": "Tipos, interfaces y lógica compartida entre backend y frontend",
   "main": "./dist/index.js",

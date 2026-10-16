@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────
-//  Roles de usuario en el sistema ObsidiantFit
+//  Roles de usuario en el sistema FITCORE
 // ─────────────────────────────────────────────
 
 /**
- * Roles disponibles en ObsidiantFit.
+ * Roles disponibles en FITCORE.
  * - `admin`   → Acceso total al sistema
  * - `trainer` → Acceso a rutinas y usuarios asignados
  * - `user`    → Usuario final (acceso según estado de suscripción)
@@ -11,7 +11,7 @@
 export type Rol = 'user' | 'trainer' | 'admin';
 
 // ────────────────────────────────────────────────────
-//  Estados de suscripción en el sistema ObsidiantFit
+//  Estados de suscripción en el sistema FITCORE
 // ────────────────────────────────────────────────────
 
 /**

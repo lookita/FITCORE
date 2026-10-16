@@ -1,30 +1,19 @@
-# ObsidiantFit — Monorepo
+# FITCORE — Monorepo
 
-SaaS de fitness construido con **NestJS** (backend) + **React + Vite** (frontend) en una arquitectura **monorepo** con npm workspaces.
+Plataforma fitness construida con backend y frontend (Vue 3 + Vite) en una arquitectura **monorepo** con npm workspaces.
 
 ## 📁 Estructura
 
 ```
-ObsidiantFit/
+FITCORE/
 ├── package.json            ← Raíz del monorepo (npm workspaces)
 ├── .gitignore
 ├── setup-monorepo.ps1      ← Script de configuración inicial
 │
-├── Back/                   ← @obsidiantfit/backend (NestJS)
-│   └── src/
-│       ├── main.ts
-│       ├── app.module.ts
-│       ├── app.controller.ts
-│       ├── app.service.ts
-│       └── logica.ts
-│
-├── frontend/               ← @obsidiantfit/frontend (React + Vite)
-│   └── src/
-│       ├── main.tsx
-│       └── App.tsx
+├── Frontend/               ← Frontend (Vue 3 + Vite)
 │
 └── packages/
-    └── shared/             ← @obsidiantfit/shared (tipos compartidos)
+    └── shared/             ← @fitcore/shared (tipos compartidos)
         └── src/
             ├── index.ts
             └── roles.ts
@@ -57,27 +46,24 @@ npm run dev:frontend
 
 | Nombre | Directorio | Descripción |
 |---|---|---|
-| `@obsidiantfit/backend` | `Back/` | API REST con NestJS |
-| `@obsidiantfit/frontend` | `frontend/` | SPA con React 19 + Vite |
-| `@obsidiantfit/shared` | `packages/shared/` | Tipos y lógica compartida |
+| `@fitcore/frontend` | `Frontend/` | SPA con Vue 3 + Vite |
+| `@fitcore/shared` | `packages/shared/` | Tipos y lógica compartida |
 
 ## 🔧 Comandos
 
 | Comando | Descripción |
 |---|---|
-| `npm run dev:backend` | Backend en modo desarrollo |
 | `npm run dev:frontend` | Frontend en modo desarrollo |
-| `npm run build` | Build completo (shared → backend → frontend) |
+| `npm run build` | Build completo (shared → frontend) |
 | `npm run build:shared` | Compilar solo el paquete shared |
-| `npm run test` | Tests del backend |
 | `npm run lint` | Lint de todos los workspaces |
 
 ## 🗂️ Paquete Shared
 
-El paquete `@obsidiantfit/shared` contiene los tipos y la lógica de negocio que se comparte entre el backend y el frontend.
+El paquete `@fitcore/shared` contiene los tipos y la lógica de negocio que se comparte entre el backend y el frontend.
 
 ```typescript
-import { Rol, EstadoSub, validarAcceso } from '@obsidiantfit/shared';
+import { Rol, EstadoSub, validarAcceso } from '@fitcore/shared';
 
 // Tipos disponibles:
 type Rol = 'user' | 'trainer' | 'admin';

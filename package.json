@@ -1,26 +1,24 @@
 {
-  "name": "obsidiantfit",
+  "name": "fitcore",
   "version": "0.0.1",
   "private": true,
   "workspaces": [
-    "Back",
     "frontend",
     "packages/*"
   ],
   "scripts": {
-    "dev:backend": "npm run start:dev --workspace=Back",
     "dev:frontend": "npm run dev --workspace=frontend",
-    "dev": "npm run dev:backend & npm run dev:frontend",
-    "build:backend": "npm run build --workspace=Back",
+    "dev": "npm run dev:frontend",
     "build:frontend": "npm run build --workspace=frontend",
-    "build:shared": "npm run build --workspace=@obsidiantfit/shared",
-    "build": "npm run build:shared && npm run build:backend && npm run build:frontend",
-    "test": "npm run test --workspace=Back",
-    "lint": "npm run lint --workspaces --if-present",
-    "format": "npm run format --workspace=Back"
+    "build:shared": "npm run build --workspace=@fitcore/shared",
+    "build": "npm run build:shared && npm run build:frontend",
+    "lint": "npm run lint --workspaces --if-present"
   },
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.13.1"
   }
 }

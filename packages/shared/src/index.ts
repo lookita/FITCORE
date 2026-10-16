@@ -1,12 +1,11 @@
 /**
- * @obsidiantfit/shared
+ * @fitcore/shared
  *
- * Tipos, interfaces y lógica compartida entre el backend (NestJS)
- * y el frontend (React + Vite) de ObsidiantFit.
+ * Tipos, interfaces y lógica compartida entre backend y frontend de FITCORE.
  *
  * Importar desde cualquier workspace:
  * @example
- * import { Rol, EstadoSub, validarAcceso } from '@obsidiantfit/shared';
+ * import { Rol, EstadoSub, validarAcceso } from '@fitcore/shared';
  */
 
 export * from './roles';
