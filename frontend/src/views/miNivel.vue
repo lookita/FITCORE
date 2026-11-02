@@ -3,12 +3,8 @@ import { ref, computed } from 'vue';
 import BarraUsuario from '@/components/BarraUsuario.vue';
 import Header2 from '@/components/Header2.vue';
 
-// ============================================================================
-// DATOS DEL USUARIO (Listos para conectar luego con tu base de datos o Pinia)
-// Todos los campos están inicializados vacíos / por defecto para que los conectes
-// ============================================================================
 const datosUsuario = ref({
-  nombre: 'Lucas', // Puedes dejarlo vacío: ''
+  nombre: '', // Puedes dejarlo vacío: ''
   nivel: 1,
   rango: 'Novato',
   xpActual: 0,
@@ -19,14 +15,12 @@ const datosUsuario = ref({
   horasEntrenadas: 0
 });
 
-// Porcentaje de progreso de la barra de nivel (de 0 a 100%)
 const porcentajeProgreso = computed(() => {
   if (datosUsuario.value.xpSiguienteNivel === 0) return 0;
   const progreso = (datosUsuario.value.xpActual / datosUsuario.value.xpSiguienteNivel) * 100;
   return Math.min(Math.max(progreso, 0), 100);
 });
 
-// Catálogo de todos los 10 niveles de FitCore
 const listaNiveles = ref([
   { nivel: 1, titulo: 'Iniciación Calisténica', xp: '0 XP', recompensa: 'Rutina Calistenia Básica', desbloqueado: true },
   { nivel: 2, titulo: 'Potencia y Core', xp: '500 XP', recompensa: 'Rutina de Core y Fondos', desbloqueado: false },
@@ -43,15 +37,12 @@ const listaNiveles = ref([
 
 <template>
   <div class="pantalla-nivel">
-    <!-- Barra lateral fija del usuario -->
     <BarraUsuario class="columna-usuario" />
 
-    <!-- Zona de contenido con cabecera y scroll independiente -->
     <div class="zona-contenido">
       <Header2 :nombre="datosUsuario.nombre || 'Atleta'" />
 
       <main class="cuerpo-scroll">
-        <!-- Tarjeta gigante con el nivel y la barra de experiencia -->
         <section class="tarjeta-nivel-grande">
           <div class="fila-arriba-nivel">
             <div>
@@ -62,14 +53,12 @@ const listaNiveles = ref([
               <p class="subtitulo-rango">Rango actual: <strong class="texto-rojo">{{ datosUsuario.rango }}</strong></p>
             </div>
 
-            <!-- Gran medalla circular -->
             <div class="medalla-circular">
               <span class="numero-medalla">{{ datosUsuario.nivel }}</span>
               <small class="texto-medalla">NIVEL</small>
             </div>
           </div>
 
-          <!-- Barra de experiencia XP -->
           <div class="caja-barra-xp">
             <div class="fila-info-xp">
               <span>Experiencia: <strong>{{ datosUsuario.xpActual }} / {{ datosUsuario.xpSiguienteNivel }} XP</strong></span>

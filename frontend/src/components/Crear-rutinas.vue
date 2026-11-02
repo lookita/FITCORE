@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import {ref} from 'vue'; 
-import { obtenerTituloVista } from '@/DTO/usuario.dto';
-import { PasoFormulario } from '@/DTO/RegistroUsuarioDTO';
 const nombre = ref<string>('');
 const password = ref<string>('');
 const correo = ref<string>('');
 
-const titulo = obtenerTituloVista(PasoFormulario.REGISTRO); 
 </script>
 
 <template>

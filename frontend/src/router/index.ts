@@ -22,7 +22,8 @@ const router = createRouter({
         },{
             path:'/perfil',
             name: 'Perfil',
-            component: PerfilView
+            component: PerfilView,
+            meta: { requiereAuth: true }
         },{
             path: '/registro',
             name: 'Registro',
@@ -32,12 +33,14 @@ const router = createRouter({
         {
             path: '/rutinas',
             name: 'Rutinas',
-            component: RutinasView
+            component: RutinasView,
+            meta: { requiereAuth: true }
         },
         {
             path: '/entrenamiento',
             name: 'entrenamiento',
-            component: EntrenamientoView
+            component: EntrenamientoView,
+            meta: { requiereAuth: true }
         },
         {
             path: '/minivel',

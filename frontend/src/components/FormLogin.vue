@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { EstadoSesion } from '@/DTO/EstadoSesion';
-
+import {useUsuarioVerificacion} from '../stores/auth.store'
 const email = ref<string>('');
 const password = ref<string>('');
+
+
+const datos = useUsuarioVerificacion(); 
+
 
 const props = defineProps<{
   sesion: EstadoSesion;
@@ -30,7 +34,7 @@ const iniciarSesion = (): void => {
   <div class="caja-formulario">
     <div class="tarjeta-formulario">
       <!-- Si NO está autenticado: Formulario de Login -->
-      <div v-if="!sesion.Autenticado">
+      <div v-if="!datos.estadoSesion.autenticado">
         <div class="cabecera-tarjeta">
           <span class="etiqueta-roja">
             <i class="bi bi-shield-lock-fill"></i> ACCESO SEGURO
@@ -39,7 +43,7 @@ const iniciarSesion = (): void => {
           <p class="subtitulo-tarjeta">Ingresa a FitCore para continuar tu entrenamiento.</p>
         </div>
 
-        <form class="formulario" @submit.prevent="iniciarSesion">
+        <form class="formulario" @submit.prevent="datos.iniciarSesion">
           <div class="campo">
             <label class="etiqueta-campo" for="campo-email">Correo electrónico</label>
             <input
@@ -79,7 +83,7 @@ const iniciarSesion = (): void => {
       <!-- Si YA está autenticado -->
       <div v-else class="sesion-activa-box">
         <span class="etiqueta-roja">SESIÓN ACTIVA</span>
-        <h2 class="titulo-tarjeta">¡Hola, {{ sesion.UsuarioConectado }}!</h2>
+        <h2 class="titulo-tarjeta">¡Hola, {{ datos.estadoSesion.usuarioConectado?.nombre}}!</h2>
         <p class="subtitulo-tarjeta">Ya tienes una sesión iniciada en tu cuenta.</p>
         
         <div class="fila-botones-sesion">

@@ -13,7 +13,9 @@ export interface Registro{
 export interface Usuario{
     id: string | number,
     nombre: string,
-    email: string 
+    email: string, 
+    xp_total: number,
+    nivel_actual: number
 }
 
 export interface ApiResponse<T>{
@@ -22,3 +24,8 @@ export interface ApiResponse<T>{
     'datos' : T
 }
 
+
+export interface DatosLogin{
+    usuario: Usuario,
+    token: string
+}

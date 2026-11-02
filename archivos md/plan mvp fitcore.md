@@ -136,7 +136,7 @@ PerfilView
 ### Tablas involucradas de tu schema:
 - `agenda_semanal`: Qué rutina le toca al usuario cada día (`dia_semana`: 1 = Lunes a 7 = Domingo).
 - `sesiones_entrenamiento`: La sesión activa (`fecha`, `duracion_segundos`, `estado`, `xp_otorgado`).
-- `series_registro`: Cada serie física que el usuario realiza (`peso_kg`, `repeticiones`, `completada`).
+- `series_registro`: Cada serie física de calistenia que el usuario realiza (`repeticiones`, `peso_kg` para lastre opcional, `completada`).
 
 ### El ciclo de vida de un entrenamiento:
 
@@ -155,9 +155,10 @@ Paso B: Inicio de Sesión
    El frontend recibe el id de esa sesión recién nacida.
         ↓
 Paso C: Entrenamiento en Vivo (Series)
-   Por cada ejercicio de la rutina, el usuario va realizando series.
-   Escribe el peso que levantó (peso_kg) y las repeticiones logradas.
-   Marca el checkbox "completada = true".
+   Por cada ejercicio de calistenia (ej. dominadas, fondos, flexiones):
+   El usuario registra cada serie realizada (ej. Serie 1: 3 reps, Serie 2: 3 reps...).
+   Indica las repeticiones logradas y opcionalmente lastre (peso_kg, por defecto 0.00).
+   Marca "completada = true".
    Se guarda la fila en series_registro vinculada al sesion_id.
         ↓
 Paso D: Cierre de Sesión
@@ -176,7 +177,7 @@ Paso D: Cierre de Sesión
 ### Lista de preguntas para saber si tu MVP 3 está 100% terminado:
 - [ ] ¿El usuario puede ver qué rutina le toca hoy según el día de la semana?
 - [ ] ¿Existe un botón para iniciar entrenamiento que cree la sesión con estado `'en_progreso'` en la base de datos?
-- [ ] ¿La pantalla de entrenamiento permite ingresar peso y repeticiones por cada serie?
+- [ ] ¿La pantalla de entrenamiento permite registrar repeticiones por cada serie (y lastre opcional si aplica)?
 - [ ] ¿Hay un temporizador o cálculo de duración de la sesión?
 - [ ] ¿Al finalizar, la sesión pasa a estado `'completada'` con su duración total en segundos?
 

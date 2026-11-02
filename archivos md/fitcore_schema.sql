@@ -158,13 +158,14 @@ CREATE TABLE sesiones_entrenamiento (
 
 -- -------------------------------------------------------
 -- Series individuales registradas en una sesión
+-- Orientado a calistenia: repeticiones reales por serie y lastre opcional (0.00 = peso corporal)
 -- -------------------------------------------------------
 CREATE TABLE series_registro (
     id           UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
     sesion_id    UUID        NOT NULL REFERENCES sesiones_entrenamiento(id) ON DELETE CASCADE,
     ejercicio_id UUID        NOT NULL REFERENCES ejercicios(id)             ON DELETE RESTRICT,
     numero_serie INTEGER     NOT NULL CHECK (numero_serie > 0),
-    peso_kg      DECIMAL(6,2) CHECK (peso_kg >= 0),
+    peso_kg      DECIMAL(6,2) NOT NULL DEFAULT 0.00 CHECK (peso_kg >= 0), -- Lastre o peso adicional (0.00 = peso corporal)
     repeticiones INTEGER     CHECK (repeticiones > 0),
     completada   BOOLEAN     NOT NULL DEFAULT TRUE,
     created_at   TIMESTAMP   NOT NULL DEFAULT NOW(),

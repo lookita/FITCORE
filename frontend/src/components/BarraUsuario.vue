@@ -1,72 +1,51 @@
 <template>
   <aside class="sidebar">
-    <!-- Logo y marca -->
+    <!-- Header con Logo -->
     <div class="sidebar-header">
-      <div class="logo-icon">⚡</div>
-      <span class="logo-text">VOLT</span>
+      <div class="logo-icon">
+        <img src="../components/icons/logoV.jpg" alt="FITCORE" class="logo-img" />
+      </div>
+      <span class="logo-text">FITCORE</span>
     </div>
 
-    <!-- Perfil resumido del usuario -->
+    <!-- perfil -->
     <div class="user-profile-card">
       <div class="avatar-container">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar-img" />
+        <div class="avatar-placeholder">LF</div>
       </div>
       <div class="user-info">
-        <h3 class="user-name">Lucas Fernández</h3>
-        <p class="user-streak">Racha activa · 6 días</p>
+        <h3 class="user-name">{nombre reactivo}</h3>
       </div>
       <button class="options-btn" aria-label="Opciones">•••</button>
     </div>
 
-    <!-- Sección Amigos -->
+    <!-- amigos -->
     <div class="section-container">
       <div class="section-header">
         <span class="section-title">Amigos</span>
-        <span class="badge-active">6 ACTIVOS</span>
+        <span class="badge-active">cantidad de amigos</span>
       </div>
       <div class="friends-grid">
-        <div v-for="friend in friends" :key="friend.name" class="friend-item">
+        <div v-for="amigo in amigos" :key="amigo.nombre" class="friend-item">
           <div class="friend-avatar-wrapper">
-            <img :src="friend.avatar" :alt="friend.name" class="friend-avatar" />
           </div>
-          <span class="friend-name">{{ friend.name }}</span>
+          <span class="friend-name">{{ amigo.nombre }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Sección Intereses -->
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-title">Intereses</span>
-        <span class="filter-icon">⚙️</span>
-      </div>
-      <ul class="interests-list">
-        <li v-for="interest in interests" :key="interest.text" class="interest-item">
-          <span class="interest-icon">{{ interest.icon }}</span>
-          <span class="interest-text">{{ interest.text }}</span>
-        </li>
-      </ul>
-    </div>
   </aside>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const friends = ref([
-  { name: 'Mara', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100' },
-  { name: 'Leo', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100' },
-  { name: 'Inés', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100' },
-  { name: 'Dani', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100' },
-  { name: 'Noa', avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100' },
-  { name: 'Álex', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100' },
-])
+const amigos = ref ([
+  {nombre: 'x'},
+  {nombre: 'y'},
+  {nombre: 'z'}
+]);
 
-const interests = ref([
-  { text: 'Fuerza funcional', icon: '⚡' },
-  { text: 'Rendimiento', icon: '📈' },
-  { text: 'HIIT express', icon: '⏱️' },
-])
 </script>
 
 <style scoped>
@@ -90,15 +69,20 @@ const interests = ref([
 }
 
 .logo-icon {
-  background: #ff3b30;
-  color: white;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  overflow: hidden;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .logo-text {
@@ -117,11 +101,23 @@ const interests = ref([
   border: 1px solid #27272a;
 }
 
-.avatar-img {
+.avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  object-fit: cover;
+  background: #ff3b30;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 .user-info {
@@ -200,13 +196,13 @@ const interests = ref([
   align-items: center;
   justify-content: center;
   margin-bottom: 4px;
+  background-color: #18181b;
 }
 
-.friend-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+.friend-initial {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .friend-name {
@@ -238,5 +234,15 @@ const interests = ref([
 
 .interest-item:hover {
   background: #27272a;
+}
+
+.filter-icon {
+  font-size: 0.9rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.filter-icon:hover {
+  opacity: 1;
 }
 </style>

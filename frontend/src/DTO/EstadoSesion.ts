@@ -1,10 +1,14 @@
+// import {Usuario} from './Auth.DTO'
+
 export interface EstadoSesion{
-    UsuarioConectado: string | null,
-    Autenticado: boolean
+    usuarioConectado: Usuario | null,
+    autenticado: boolean,
+    validacion: boolean | null
 }
 
-export interface EstadoInicial{
-    EstadoSesion: EstadoSesion,
-    UsuarioConectado: null,
-    Autenticado: false
+export const valorInicial: EstadoSesion ={
+    usuarioConectado: null,
+    autenticado: false,
+    validacion: null
 }
+

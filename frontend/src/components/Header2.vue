@@ -12,7 +12,7 @@ const props = withDefaults(
     nombre?: string;
   }>(),
   {
-    nombre: 'Lucas',
+    nombre: '',
   }
 );
 

@@ -1,17 +1,7 @@
-import type { Login, Registro, Usuario, ApiResponse } from '@/DTO/Auth.DTO';
+// se encarga de comunicarse con PHP y validar la respuesta antes de entregársela a LoginView.vue.
 
-import {
-    validarCodigo,
-    validarRespuestaJson,
-    validaURL,
-    validarMetodoPOST,
-    validarPayload,
-    chequearConexion,
-    validarErrorBackend,
-    validarEmail,
-    validarPaswoord,
-    tiempoRespuesta
-} from './PasoService';
+import type { Login, Registro, Usuario, ApiResponse, DatosLogin } from '@/DTO/Auth.DTO';
+import {validarCodigo, validarRespuestaJson, validaURL,validarMetodoPOST,validarPayload,chequearConexion,validarErrorBackend,validarEmail,validarPaswoord,tiempoRespuesta} from './PasoService';
 
 const API_BASE_URL = 'http://localhost/Backend';
 
@@ -45,7 +35,7 @@ async function leerRespuesta<T>(respuesta: Response): Promise<ApiResponse<T>> {
 }
 
 
-export async function ejecutarLogin(payload: Login): Promise<ApiResponse<Usuario>>{
+export async function ejecutarLogin(payload: Login): Promise<ApiResponse<DatosLogin>>{
     const url = `${API_BASE_URL}/login.php`;
     
 
@@ -60,7 +50,7 @@ export async function ejecutarLogin(payload: Login): Promise<ApiResponse<Usuario
         body: JSON.stringify(payload)
     });
 
-    return leerRespuesta<Usuario>(respuesta); 
+    return leerRespuesta<DatosLogin>(respuesta); 
 }
 
 

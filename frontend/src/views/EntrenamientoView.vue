@@ -190,7 +190,6 @@ const finalizarEntrenamiento = () => {
       <!-- Cronómetro general de la sesión -->
       <div class="caja-cronometro">
         <span class="puntito-cronometro"></span>
-        <span class="texto-tiempo">{{ formatearTiempo(segundosTotales) }}</span>
       </div>
 
       <!-- Botón de terminar -->

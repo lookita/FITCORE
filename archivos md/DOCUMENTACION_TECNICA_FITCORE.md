@@ -729,12 +729,12 @@ Registro formal del nacimiento y conclusión de un entrenamiento físico.
 - `created_at` (TIMESTAMP, NOT NULL)
 
 #### 6.5.10 series_registro
-Bitácora de repeticiones y kilajes ejecutados serie por serie.
+Bitácora de repeticiones y lastre ejecutados serie por serie en calistenia.
 - `id` (UUID, PK)
 - `sesion_id` (UUID, FK -> sesiones_entrenamiento.id ON DELETE CASCADE)
 - `ejercicio_id` (UUID, FK -> ejercicios.id ON DELETE RESTRICT)
 - `numero_serie` (INTEGER, NOT NULL, CHECK > 0)
-- `peso_kg` (DECIMAL(6,2), CHECK >= 0)
+- `peso_kg` (DECIMAL(6,2), NOT NULL, DEFAULT 0.00, CHECK >= 0 - Lastre o peso adicional; 0.00 para peso corporal)
 - `repeticiones` (INTEGER, CHECK > 0)
 - `completada` (BOOLEAN, NOT NULL, DEFAULT TRUE)
 - `created_at` (TIMESTAMP, NOT NULL)

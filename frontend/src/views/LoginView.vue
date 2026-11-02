@@ -2,41 +2,21 @@
 import FormLogin from '@/components/FormLogin.vue';
 import type { Login } from '@/DTO/Auth.DTO';
 import type { EstadoSesion } from '@/DTO/EstadoSesion';
-import { ejecutarLogin } from '@/services/autenticar.service';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import {useUsuarioVerificacion} from '../stores/auth.store'
 
 const router = useRouter();
 
-// Estado de sesión
-const sesion = reactive<EstadoSesion>({
-  UsuarioConectado: null,
-  Autenticado: false
-});
+const usuario = useUsuarioVerificacion(); 
+
 
 const loguear = async (datos: Login) => {
-  try {
-    const respuesta = await ejecutarLogin(datos);
+    await usuario.iniciarSesion(datos);
 
-    if (respuesta.exito && respuesta.datos) {
-      sesion.UsuarioConectado = respuesta.datos.nombre;
-      sesion.Autenticado = true;
-      console.log('Login exitoso:', respuesta);
-      alert('¡Bienvenido, ' + respuesta.datos.nombre + '!');
-      router.push('/rutinas');
-    } else {
-      alert(respuesta.mensaje ?? 'Error al iniciar sesión');
-    }
-  } catch (error) {
-    console.error('Error al iniciar sesión:', error);
-    alert('No se pudo conectar con el servidor. Error: ' + (error as Error).message);
-  }
+    router.push('/rutinas');
 };
 
-const cerrarSesion = () => {
-  sesion.UsuarioConectado = null;
-  sesion.Autenticado = false;
-};
 </script>
 
 <template>
@@ -50,7 +30,7 @@ const cerrarSesion = () => {
         </router-link>
 
         <FormLogin
-          :sesion="sesion"
+          :sesion="usuario.estadoSesion"
           @guardar="loguear"
           @cerrar-sesion="cerrarSesion"
         />
