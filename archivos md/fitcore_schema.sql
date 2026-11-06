@@ -129,9 +129,9 @@ CREATE TABLE rutina_ejercicios (
 CREATE INDEX idx_rutina_ejercicios_ejercicio ON rutina_ejercicios(ejercicio_id);
 
 -- -------------------------------------------------------
--- Agenda semanal del usuario
+-- dias semanal del usuario
 -- -------------------------------------------------------
-CREATE TABLE agenda_semanal (
+CREATE TABLE dias_semanal (
     id         UUID    PRIMARY KEY DEFAULT uuid_generate_v4(),
     usuario_id UUID    NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
     dia_semana INTEGER NOT NULL CHECK (dia_semana BETWEEN 1 AND 7), -- 1: Lunes, 7: Domingo

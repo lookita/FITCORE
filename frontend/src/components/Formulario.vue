@@ -32,11 +32,7 @@ const enviar = (): void => {
     <div class="tarjeta-formulario">
       <!-- Encabezado de la tarjeta -->
       <div class="cabecera-tarjeta">
-        <span class="etiqueta-roja">
-          <i class="bi bi-lightning-charge-fill"></i> PLAN INTELIGENTE
-        </span>
         <h2 class="titulo-tarjeta">Crear Cuenta</h2>
-        <p class="subtitulo-tarjeta">Regístrate en FitCore para comenzar tu entrenamiento.</p>
       </div>
 
       <!-- Formulario con sus campos -->

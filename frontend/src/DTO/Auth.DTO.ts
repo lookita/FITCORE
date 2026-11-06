@@ -1,31 +1,61 @@
-export interface Login{
-    email: string,
-    password: string
+export interface Login {
+    email: string;
+    password: string;
 }
 
-export interface Registro{
-    nombre: string,
-    password: string,
-    email: string
+export interface Registro {
+    nombre: string;
+    password: string;
+    email: string;
+}
+
+export interface Usuario {
+    id: string | number;
+    nombre: string;
+    email: string;
+    rol?: string;
+    xp_total: number;
+    nivel_actual: number;
+    tiene_rutina?: boolean;
+}
+
+export interface ApiResponse<T> {
+    exito: boolean;
+    mensaje: string;
+    datos: T;
+}
+
+export interface DatosLogin {
+    usuario: Usuario;
+    token: string;
 }
 
 
-export interface Usuario{
-    id: string | number,
-    nombre: string,
-    email: string, 
-    xp_total: number,
-    nivel_actual: number
+export interface CatalogoRutina {
+    nivel_actual: number;
+    categorias: string[];
+    tiene_rutina?: boolean;
+    rutina_actual?: RutinaCreada | null;
 }
 
-export interface ApiResponse<T>{
-    'exito': boolean,
-    'mensaje': string,
-    'datos' : T
+export interface CrearRutinaPayload {
+    categoria: string;
+    dias_semana: number[];
 }
 
+export interface EjercicioRutina {
+    id: string;
+    nombre: string;
+    series_objetivo: number;
+    reps_objetivo: number;
+}
 
-export interface DatosLogin{
-    usuario: Usuario,
-    token: string
+export interface RutinaCreada {
+    id: string;
+    nombre: string;
+    categoria: string;
+    nivel_actual: number;
+    dias_semana: number[];
+    dias_completados?: number[];
+    ejercicios: EjercicioRutina[];
 }

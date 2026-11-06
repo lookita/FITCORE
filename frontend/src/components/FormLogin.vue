@@ -43,7 +43,7 @@ const iniciarSesion = (): void => {
           <p class="subtitulo-tarjeta">Ingresa a FitCore para continuar tu entrenamiento.</p>
         </div>
 
-        <form class="formulario" @submit.prevent="datos.iniciarSesion">
+        <form class="formulario" @submit.prevent="iniciarSesion">
           <div class="campo">
             <label class="etiqueta-campo" for="campo-email">Correo electrónico</label>
             <input

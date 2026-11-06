@@ -63,7 +63,7 @@ Navegador
   Vue 3 + TypeScript + Vite
   Views -> Componentes de formulario -> Servicio de autenticacion
                               |
-                              | HTTP POST + JSON / CORS
+                              | HTTP POST + JSON por proxy Vite
                               v
 Apache + PHP
   registro.php / login.php -> db.php (PDO)
@@ -95,7 +95,7 @@ Apache + PHP
 1. El usuario completa los campos en `src/components/Formulario.vue`.
 2. El componente emite el evento `guardar` con nombre, email y contrasena.
 3. `src/views/RegistroView.vue` recibe los datos y llama a `ejecutarRegistro()`.
-4. `src/services/auth.services.ts` valida URL y payload y envia un `POST` JSON a `http://localhost/Backend/registro.php`.
+4. `src/services/autenticar.service.ts` valida URL y payload y envia un `POST` JSON a `/Backend/registro.php`; Vite reenvia `/Backend` a Apache durante el desarrollo.
 5. `Backend/registro.php` valida los campos, busca un email duplicado, genera el hash de la contrasena e inserta el registro.
 6. `Backend/db.php` abre la conexion PDO con PostgreSQL.
 7. El backend devuelve JSON con el resultado y la interfaz informa si la cuenta fue creada o si hubo un error.
@@ -104,7 +104,7 @@ Apache + PHP
 
 1. `src/components/FormLogin.vue` captura email y contrasena y emite `guardar`.
 2. `src/views/LoginView.vue` recibe el evento y llama a `ejecutarLogin()`.
-3. `src/services/auth.services.ts` envia un `POST` JSON a `http://localhost/Backend/login.php`.
+3. `src/services/autenticar.service.ts` envia un `POST` JSON a `/Backend/login.php`; Vite reenvia `/Backend` a Apache durante el desarrollo.
 4. `Backend/login.php` busca el usuario y comprueba el hash de contrasena.
 5. El backend responde con el resultado en JSON.
 
@@ -167,7 +167,7 @@ usuarios
 
 ### 5.1. Registro
 
-- **URL local:** `http://localhost/Backend/registro.php`
+- **URL local desde el navegador:** `/Backend/registro.php`
 - **Metodo:** `POST`
 - **Content-Type:** `application/json`
 - **Solicitud:**
@@ -187,7 +187,7 @@ usuarios
 
 ### 5.2. Login
 
-- **URL local:** `http://localhost/Backend/login.php`
+- **URL local desde el navegador:** `/Backend/login.php`
 - **Metodo:** `POST`
 - **Content-Type:** `application/json`
 - **Solicitud:**
@@ -258,7 +258,7 @@ npm install vue-router@4
 4. Habilitar `pdo_pgsql` en la configuracion PHP utilizada por Apache.
 5. Iniciar PostgreSQL y crear/configurar la base `FITNESS` y la tabla `usuarios`.
 6. Configurar en `Backend/db.php` el host, puerto, base, usuario y contrasena correctos.
-7. Mantener el origen CORS de desarrollo en concordancia con el servidor frontend (`http://localhost:5173`).
+7. Mantener Apache activo en `127.0.0.1:80` o configurar `VITE_BACKEND_ORIGIN` en `Frontend/.env.local`.
 
 No guardar contrasenas reales en este documento ni en el repositorio. Para produccion, usar variables de entorno o configuracion privada del servidor.
 

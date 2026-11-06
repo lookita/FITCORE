@@ -29,6 +29,22 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 ```
 
+### Conexión con el backend PHP
+
+En desarrollo, las peticiones a `/Backend` se envían mediante el proxy de Vite a
+`http://127.0.0.1:80/Backend`. Inicia Apache y asegúrate de que la carpeta
+`Backend` esté dentro del `DocumentRoot` configurado en Apache.
+
+Si Apache escucha en otro host o puerto, crea `Frontend/.env.local` con:
+
+```env
+VITE_BACKEND_ORIGIN=http://127.0.0.1:8080
+```
+
+`VITE_BACKEND_ORIGIN` es el origen de Apache, sin `/Backend`. Para producción,
+`VITE_API_BASE_URL` puede definir la ruta completa de la API; si no se define,
+se usa `/Backend` en el mismo origen del frontend.
+
 ### Compile and Hot-Reload for Development
 
 ```sh

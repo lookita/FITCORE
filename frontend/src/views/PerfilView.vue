@@ -2,39 +2,21 @@
 import { ref, computed } from 'vue';
 import BarraUsuario from '@/components/BarraUsuario.vue';
 import Header2 from '@/components/Header2.vue';
+import { useUsuarioVerificacion } from '@/stores/auth.store';
+import { useRutina } from '../stores/rutina.store'
+import {useEntrenamientoStore} from '../stores/entrenamiento.store'
+const datosUsuario = useUsuarioVerificacion(); 
+const rutina = useRutina();
+const xprequerido = useEntrenamientoStore();
 
-const datosUsuario = ref({
-  nombre: 'Lucas',
-  nivel: 1,
-  rango: 'Novato',
-  xpActual: 0,
-  xpSiguienteNivel: 500,
-  totalXp: 0,
-  entrenamientosCompletados: 0,
-  rachaDias: 0,
-  horasEntrenadas: 0
-});
-
-// Porcentaje de la barra de nivel (0 a 100%)
 const porcentajeProgreso = computed(() => {
-  if (datosUsuario.value.xpSiguienteNivel === 0) return 0;
-  const progreso = (datosUsuario.value.xpActual / datosUsuario.value.xpSiguienteNivel) * 100;
-  return Math.min(Math.max(progreso, 0), 100);
+  const actual = datosUsuario.xpActual;
+  const sig = datosUsuario.xpSiguienteNivel;
+  if (!sig || sig === 0) return 0;
+  return Math.min(Math.round((actual / sig) * 100), 100);
 });
 
-// Catálogo de los 10 niveles de FitCore
-const listaNiveles = ref([
-  { nivel: 1, titulo: 'Iniciación Calisténica', xp: '0 XP', recompensa: 'Rutina Calistenia Básica', desbloqueado: true },
-  { nivel: 2, titulo: 'Potencia y Core', xp: '500 XP', recompensa: 'Rutina de Core y Fondos', desbloqueado: false },
-  { nivel: 3, titulo: 'Fuerza Intermedia', xp: '1,200 XP', recompensa: 'Fondos en Paralelas', desbloqueado: false },
-  { nivel: 4, titulo: 'Dominadas Estrictas', xp: '2,200 XP', recompensa: 'L-Sit y Dominadas', desbloqueado: false },
-  { nivel: 5, titulo: 'Muscle-Up Mastery', xp: '3,500 XP', recompensa: 'Transición a Muscle-Up', desbloqueado: false },
-  { nivel: 6, titulo: 'Fuerza Explosiva', xp: '5,000 XP', recompensa: 'Planchas y Palanca', desbloqueado: false },
-  { nivel: 7, titulo: 'Front Lever Básico', xp: '7,000 XP', recompensa: 'Isométricos Avanzados', desbloqueado: false },
-  { nivel: 8, titulo: 'Control Total', xp: '9,500 XP', recompensa: 'Dominadas a una mano', desbloqueado: false },
-  { nivel: 9, titulo: 'Atleta Élite', xp: '12,500 XP', recompensa: 'Rutinas de Alta Intensidad', desbloqueado: false },
-  { nivel: 10, titulo: 'Maestro FitCore', xp: '16,000 XP', recompensa: 'Acceso Total al Olimpo', desbloqueado: false }
-]);
+
 </script>
 
 <template>
@@ -44,16 +26,13 @@ const listaNiveles = ref([
 
     <!-- Área de contenido con scroll independiente -->
     <div class="perfil-content-wrapper">
-      <Header2 :nombre="datosUsuario.nombre || 'Atleta'" class="perfil-topbar" />
+      <Header2 :nombre="datosUsuario.estadoSesion.usuarioConectado?.nombre || 'Atleta'" class="perfil-topbar" />
 
       <main class="perfil-body-scroll">
         <!-- Tarjeta gigante con el nivel y la barra de experiencia -->
         <section class="tarjeta-nivel-grande">
           <div class="fila-arriba-nivel">
             <div>
-              <span class="etiqueta-roja">
-                <i class="bi bi-trophy-fill"></i> PROGRESO DE NIVEL
-              </span>
               <h1 class="titulo-nivel">Nivel {{ datosUsuario.nivel }}</h1>
               <p class="subtitulo-rango">Rango actual: <strong class="texto-rojo">{{ datosUsuario.rango }}</strong></p>
             </div>
@@ -480,18 +459,21 @@ const listaNiveles = ref([
 /* Responsividad */
 @media (max-width: 900px) {
   .perfil-container {
-    flex-direction: column;
+    flex-direction: row;
     height: auto;
-    overflow-y: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
+
   .perfil-sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
+    display: none;
   }
+
   .perfil-content-wrapper {
     height: auto;
+    min-height: 100vh;
   }
+
   .perfil-body-scroll {
     overflow-y: visible;
     padding: 20px;

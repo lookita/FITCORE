@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import { useUsuarioVerificacion } from '@/stores/auth.store';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+
+const usuario = useUsuarioVerificacion();
+const router = useRouter();
+const route = useRoute();
 
 interface MenuItem {
   name: string;
   path: string;
 }
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     nombre?: string;
   }>(),
@@ -16,8 +21,6 @@ const props = withDefaults(
   }
 );
 
-const route = useRoute();
-
 const menu = ref<MenuItem[]>([
   { name: 'Inicio', path: '/' },
   { name: 'Perfil', path: '/perfil' },
@@ -25,6 +28,11 @@ const menu = ref<MenuItem[]>([
 ]);
 
 const abrirMenu = ref<boolean>(false);
+
+const cerrar = async () => {
+  await usuario.cerrarSesion();
+  router.push('/login');
+};
 </script>
 
 <template>
@@ -34,9 +42,9 @@ const abrirMenu = ref<boolean>(false);
       <div class="caja-saludo">
         <div class="pastillita-hora">
           <span class="puntito-luz"></span>
-          <span>SÁBADO · 18:42</span>
+          <span>FITCORE</span>
         </div>
-        <h2 class="texto-saludo">Buenas tardes, <span class="texto-resaltado">{{ nombre }}</span></h2>
+        <h2 class="texto-saludo">Buenas tardes, <span class="texto-resaltado">{{ usuario.nombre }}</span></h2>
       </div>
 
       <!-- Menú para computadora -->
@@ -77,10 +85,15 @@ const abrirMenu = ref<boolean>(false);
               {{ item.name }}
             </router-link>
           </li>
+          <li v-if="usuario.estaAutenticado">
+            <button class="enlace-celular boton-salir-celular" @click="cerrar">
+              Cerrar Sesión
+            </button>
+          </li>
         </ul>
       </nav>
 
-      <!-- Cositas de la derecha: campanita y botón de acción -->
+      <!-- Cositas de la derecha: campanita, botón de acción y cerrar sesión -->
       <div class="lado-derecho">
         <button class="boton-campana" aria-label="Notificaciones">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
@@ -93,6 +106,16 @@ const abrirMenu = ref<boolean>(false);
           <i class="bi bi-play-fill"></i>
           <span>Entrenar</span>
         </router-link>
+
+        <button
+          v-if="usuario.estaAutenticado"
+          class="boton-salir"
+          title="Cerrar sesión"
+          aria-label="Cerrar sesión"
+          @click="cerrar"
+        >
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -123,70 +146,64 @@ const abrirMenu = ref<boolean>(false);
 }
 
 .pastillita-hora {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 59, 48, 0.12);
-  color: #ff3b30;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  width: fit-content;
+  letter-spacing: 1px;
+  color: #71717a;
 }
 
 .puntito-luz {
   width: 6px;
   height: 6px;
+  background-color: #22c55e;
   border-radius: 50%;
-  background-color: #ff3b30;
-  box-shadow: 0 0 6px rgba(255, 59, 48, 0.8);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
 }
 
 .texto-saludo {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #fff;
+  color: #a1a1aa;
+  font-size: 1.05rem;
+  font-weight: 500;
   margin: 0;
-  letter-spacing: -0.3px;
 }
 
 .texto-resaltado {
-  color: #ff3b30;
+  color: #ffffff;
+  font-weight: 700;
 }
 
-/* Menú en la computadora */
+/* Menú PC */
 .menu-grande {
-  display: block;
+  display: flex;
 }
 
 .lista-menu {
   display: flex;
-  align-items: center;
-  gap: 8px;
   list-style: none;
   margin: 0;
   padding: 4px;
-  background: #18181b;
-  border-radius: 12px;
+  background-color: #18181b;
   border: 1px solid #27272a;
+  border-radius: 12px;
+  gap: 4px;
 }
 
 .boton-menu {
   display: block;
-  padding: 8px 16px;
+  text-decoration: none;
+  color: #a1a1aa;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #a1a1aa;
-  text-decoration: none;
+  padding: 8px 16px;
   border-radius: 8px;
   transition: all 0.2s ease;
 }
 
 .boton-menu:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 .activo {
@@ -245,93 +262,109 @@ const abrirMenu = ref<boolean>(false);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: background 0.2s ease;
+  gap: 6px;
+  transition: background-color 0.2s ease;
 }
 
 .boton-rojo:hover {
-  background: #e03229;
+  background-color: #e03126;
 }
 
-/* Botón de rayitas para celular */
+.boton-salir {
+  background: #18181b;
+  border: 1px solid #27272a;
+  color: #ef4444;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.boton-salir:hover {
+  background: #27272a;
+  color: #ff3b30;
+  border-color: #ef4444;
+}
+
+.boton-salir-celular {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 700;
+  padding: 12px 16px;
+  width: 100%;
+}
+
+/* Celular */
 .boton-rayitas {
   display: none;
   background: #18181b;
   border: 1px solid #27272a;
   border-radius: 8px;
-  width: 38px;
-  height: 38px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
   cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .boton-rayitas span {
-  width: 18px;
+  display: block;
+  width: 100%;
   height: 2px;
-  background: #fff;
+  background-color: #fff;
   border-radius: 2px;
 }
 
-/* Menú que cae en el celular */
 .menu-celular {
+  display: none;
   position: absolute;
-  top: 75px;
-  right: 20px;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 200px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  background: #121214;
+  border-bottom: 1px solid #222226;
+  z-index: 99;
 }
 
 .lista-celular {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 16px 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .enlace-celular {
-  display: block;
-  padding: 10px 14px;
-  color: #d4d4d8;
   text-decoration: none;
-  font-size: 0.9rem;
+  color: #a1a1aa;
+  font-size: 1rem;
   font-weight: 600;
-  border-radius: 8px;
-  transition: background 0.2s;
+  display: block;
+  padding: 8px 0;
 }
 
-.enlace-celular:hover {
-  background: #27272a;
-  color: #fff;
-}
-
-/* Celulares y tablets */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .menu-grande {
     display: none;
   }
-
   .boton-rayitas {
     display: flex;
   }
-
+  .menu-celular {
+    display: block;
+  }
   .caja-barra {
     padding: 16px 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .boton-rojo {
-    display: none;
   }
 }
 </style>

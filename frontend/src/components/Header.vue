@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useUsuarioVerificacion } from '@/stores/auth.store';
+
+const auth = useUsuarioVerificacion();
 
 interface MenuItem {
   name: string;
@@ -79,9 +82,16 @@ const abrirMenu = ref<boolean>(false);
           <span class="puntito-rojo"></span>
         </button>
 
-        <router-link to="/registro" class="boton-demo">
+        <!-- Si NO está logueado: mostrar "Solicitar demo" -->
+        <router-link v-if="!auth.estaAutenticado" to="/registro" class="boton-demo">
           <span>Solicitar demo</span>
           <i class="bi bi-arrow-right flechita"></i>
+        </router-link>
+
+        <!-- Si YA está logueado: mostrar "Ir a entrenar" -->
+        <router-link v-else to="/dashboard" class="boton-demo">
+          <i class="bi bi-play-fill"></i>
+          <span>Ir a entrenar</span>
         </router-link>
       </div>
     </div>

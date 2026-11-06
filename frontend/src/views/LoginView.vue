@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import FormLogin from '@/components/FormLogin.vue';
 import type { Login } from '@/DTO/Auth.DTO';
-import type { EstadoSesion } from '@/DTO/EstadoSesion';
-import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import {useUsuarioVerificacion} from '../stores/auth.store'
+import { useUsuarioVerificacion } from '@/stores/auth.store';
 
 const router = useRouter();
-
-const usuario = useUsuarioVerificacion(); 
-
+const usuario = useUsuarioVerificacion();
 
 const loguear = async (datos: Login) => {
+  try {
     await usuario.iniciarSesion(datos);
-
-    router.push('/rutinas');
+    router.push('/dashboard');
+  } catch (error: any) {
+    alert(error?.message || 'Error al iniciar sesión. Verifica tus credenciales.');
+  }
 };
 
+const desloguear = async () => {
+  await usuario.cerrarSesion();
+};
 </script>
 
 <template>
@@ -32,7 +34,7 @@ const loguear = async (datos: Login) => {
         <FormLogin
           :sesion="usuario.estadoSesion"
           @guardar="loguear"
-          @cerrar-sesion="cerrarSesion"
+          @cerrar-sesion="desloguear"
         />
       </div>
     </main>
