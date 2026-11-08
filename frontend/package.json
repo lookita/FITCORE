@@ -28,6 +28,9 @@
     "vite-plugin-vue-devtools": "^8.2.1",
     "vue-tsc": "^3.3.11"
   },
+  "optionalDependencies": {
+    "@rolldown/binding-linux-x64-gnu": "1.2.16"
+  },
   "engines": {
     "node": "^22.18.0 || >=24.12.0"
   }
