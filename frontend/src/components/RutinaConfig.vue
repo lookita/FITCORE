@@ -170,7 +170,7 @@ defineExpose({ abrir, cerrar });
               <strong>¡Rutina guardada en tu calendario!</strong>
               <p>
                 {{ rutina.rutinaCreada.categoria }} · Nivel {{ rutina.rutinaCreada.nivel_actual }} · 
-                {{ rutina.rutinaCreada.dias_semana.map(id => listaDias[id - 1].etiqueta).join(', ') }}
+                {{ rutina.rutinaCreada.dias_semana.map(id => listaDias[id - 1]?.etiqueta || `Día ${id}`).join(', ') }}
               </p>
             </div>
           </div>

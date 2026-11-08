@@ -1,45 +1,34 @@
-import {} from '../'
+import { defineStore } from 'pinia';
 
-export const useUsuarioVerificacion = defineStore('Autenticacion',{
-    state:() =>({
-        
-    }), 
+export interface XpRegistro {
+  id: string;
+  usuario_id: string;
+  xp_ganado: number;
+  motivo: string;
+  created_at: string;
+}
 
-    actions:{
-        //llamo a la funcion, establezco parametro
-        async iniciarSesion(login: Login){
-            const datos = await ejecutarLogin(login);
+export const useXpHistorialStore = defineStore('XpHistorial', {
+  state: () => ({
+    historial: [] as XpRegistro[],
+    cargando: false as boolean,
+    error: '' as string
+  }),
 
-            //guardo token sin crear ninguna variable
-            StorageService.guardar('fitcore-token', datos.datos.token);
+  getters: {
+    totalXpGanado: (state): number =>
+      state.historial.reduce((total, reg) => total + reg.xp_ganado, 0),
+    ultimosRegistros: (state): XpRegistro[] =>
+      state.historial.slice(0, 10)
+  },
 
-
-            // utilizo this para llamara a las propiedades
-            this.estadoSesion.usuarioConectado = datos.datos.usuario;
-            this.estadoSesion.autenticado = true;
-            this.estadoSesion.validacion = true;
-        },
-
-
-        async restaurarSesion() {
-            const token = StorageService.obtener<string>('fitcore-token');
-
-            if (!token) {
-                this.estadoSesion = {...valorInicial};
-                return;
-            }
-
-
-            const respuesta = await verificarSesion(token);
-
-            this.estadoSesion.usuarioConectado = respuesta.datos.usuario;
-        },
-
-
-        cerrarSesion() {
-            StorageService.eliminar('fitcore-token');
-
-            this.estadoSesion = {...valorInicial};
-        }
+  actions: {
+    setHistorial(registros: XpRegistro[]) {
+      this.historial = registros;
+    },
+    limpiar() {
+      this.historial = [];
+      this.error = '';
     }
+  }
 });

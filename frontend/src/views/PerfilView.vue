@@ -17,6 +17,15 @@ const porcentajeProgreso = computed(() => {
   return Math.min(Math.round((actual / sig) * 100), 100);
 });
 
+const listaNiveles = computed(() =>
+  xprequerido.catalogoNiveles.map((n) => ({
+    nivel: n.id,
+    titulo: n.nombre,
+    xp: `${n.id * 1000} XP`,
+    recompensa: n.descripcion
+  }))
+);
+
 
 </script>
 

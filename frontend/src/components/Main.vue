@@ -108,7 +108,7 @@
         <button class="slider-arrow left" @click="prevTestimonial">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <div class="testimonial-card">
+        <div v-if="currentTestimonial" class="testimonial-card">
           <div class="testimonial-avatar">{{ currentTestimonial.initials }}</div>
           <p class="testimonial-text">"{{ currentTestimonial.text }}"</p>
           <div class="testimonial-author">{{ currentTestimonial.name }}</div>
@@ -234,7 +234,7 @@ const animatedStats = ref<AnimStat[]>([
 ])
 
 function startCounters() {
-  animatedStats.value.forEach((stat, i) => {
+  animatedStats.value.forEach((stat) => {
     const duration = 2000
     const steps = 60
     const increment = stat.target / steps
@@ -242,12 +242,12 @@ function startCounters() {
     const interval = setInterval(() => {
       step++
       const val = Math.min(increment * step, stat.target)
-      animatedStats.value[i].current = val
+      stat.current = val
       const formatted =
         stat.decimals > 0
           ? val.toFixed(stat.decimals) + stat.suffix
           : Math.round(val).toLocaleString('es-AR') + stat.suffix
-      animatedStats.value[i].display = formatted
+      stat.display = formatted
       if (step >= steps) clearInterval(interval)
     }, duration / steps)
   })
@@ -301,7 +301,7 @@ const testimonials = [
 ]
 
 const testimonialIndex = ref(0)
-const currentTestimonial = computed(() => testimonials[testimonialIndex.value])
+const currentTestimonial = computed(() => testimonials[testimonialIndex.value] ?? testimonials[0])
 
 function nextTestimonial() {
   testimonialIndex.value = (testimonialIndex.value + 1) % testimonials.length
