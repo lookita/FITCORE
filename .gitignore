@@ -43,3 +43,5 @@ coverage/
 *.seed
 *.pid.lock
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+powershell.bat
+powershell.cmd
