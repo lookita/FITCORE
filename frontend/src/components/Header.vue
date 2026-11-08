@@ -100,7 +100,7 @@ const abrirMenu = ref<boolean>(false);
 
 <style scoped>
 .barra-arriba {
-  width: 100%;
+  width: auto;
   background-color: #121214;
   border-bottom: 1px solid #222226;
   box-sizing: border-box;

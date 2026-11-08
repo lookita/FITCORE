@@ -36,19 +36,28 @@ const xpPorEjercicio = computed(() => {
 });
 
 // XP que vale cada sesión diaria completa
-const xpPorSesion = computed(() => xpPorEjercicio.value * ejercicios.value.length);
+const xpPorSesion = computed(() => Math.round(250 / (diasSemana.value.length || 1)));
 
 // ─── PROGRESO SEMANAL ─────────────────────────────────────────────────────
-// Usamos el XP total módulo 250 como aproximación del progreso semanal
-const xpSemanaGanado = computed(() => Math.min(auth.xpActual % 250, 250));
-const progresoSemana = computed(() => Math.round((xpSemanaGanado.value / 250) * 100));
+const semanaActual = computed(() =>
+  Math.min(4, Math.max(1, rutina.rutinaCreada?.semana_actual ?? 1))
+);
+const objetivoXpSemanal = computed(() =>
+  rutina.rutinaCreada?.objetivo_xp_semanal ?? 250
+);
+const xpSemanaGanado = computed(() =>
+  Math.min(objetivoXpSemanal.value, rutina.rutinaCreada?.xp_semana ?? 0)
+);
+const progresoSemana = computed(() =>
+  Math.round((xpSemanaGanado.value / objetivoXpSemanal.value) * 100)
+);
 
 // ─── TARJETAS DE SESIÓN ───────────────────────────────────────────────────
 const diasCompletados = computed(() => rutina.rutinaCreada?.dias_completados ?? []);
 
 const sesiones = computed(() =>
   diasSemana.value.map((diaNum, i) => {
-    const hecho = diasCompletados.value.includes(diaNum) || diasCompletados.value.includes(i + 1);
+    const hecho = diasCompletados.value.includes(i + 1);
     return {
       id:         diaNum,
       numero:     i + 1,
@@ -90,9 +99,9 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
     <section class="bloque-progreso">
       <div class="progreso-info">
         <div>
-          <span class="eyebrow">PROGRESO SEMANAL</span>
+          <span class="eyebrow">PROGRESO SEMANAL · SEMANA {{ semanaActual }}</span>
           <p class="progreso-texto">
-            <strong>{{ xpSemanaGanado }}</strong> / 250 XP
+            <strong>{{ xpSemanaGanado }}</strong> / {{ objetivoXpSemanal }} XP
           </p>
         </div>
         <span class="progreso-pct">{{ progresoSemana }}%</span>
@@ -105,7 +114,10 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
           v-for="s in 4"
           :key="s"
           class="dot-semana"
-          :class="{ activa: s === 1 }"
+          :class="{
+            activa: s === semanaActual,
+            completada: s < semanaActual || (s === semanaActual && rutina.rutinaCreada?.estado_semana === 'completada')
+          }"
         >
           S{{ s }}
         </span>
@@ -238,7 +250,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
           </div>
           <div class="resumen-sep"></div>
           <div class="resumen-item">
-            <span class="res-valor">{{ xpPorSesion * sesiones.length }}</span>
+            <span class="res-valor">{{ objetivoXpSemanal }}</span>
             <span class="res-label">XP si completás la semana</span>
           </div>
           <div class="resumen-sep"></div>
@@ -382,6 +394,10 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   color: #ff3b30;
   border-color: rgba(255, 59, 48, .4);
   background: rgba(255, 59, 48, .08);
+}
+.dot-semana.completada {
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, .35);
 }
 
 /* ─── Sin rutina ──────────────────────────────────────────────────────── */

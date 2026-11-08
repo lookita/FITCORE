@@ -344,6 +344,8 @@ defineExpose({ abrir, cerrar });
   cursor: pointer;
   box-shadow: 0 4px 18px rgba(255, 59, 48, 0.4);
   transition: transform 0.2s, background-color 0.2s;
+  margin-bottom: 100px;
+  width: auto;
 }
 
 .boton-flotante-abrir:hover {

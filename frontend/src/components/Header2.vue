@@ -44,7 +44,7 @@ const cerrar = async () => {
           <span class="puntito-luz"></span>
           <span>FITCORE</span>
         </div>
-        <h2 class="texto-saludo">Buenas tardes, <span class="texto-resaltado">{{ usuario.nombre }}</span></h2>
+        <h2 class="texto-saludo">HOLA, <span class="texto-resaltado">{{ usuario.nombre }}</span></h2>
       </div>
 
       <!-- Menú para computadora -->

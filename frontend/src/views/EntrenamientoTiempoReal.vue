@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useRutina } from '@/stores/rutina.store';
 import { useUsuarioVerificacion } from '@/stores/auth.store';
-import { registrarSesion } from '@/services/Rutina_service';
+import { registrarSesion, type ResultadoSesion } from '@/services/Rutina_service';
+import BarraInferior from '@/components/Barra-inferior.vue';
 
 const router = useRouter();
 const route  = useRoute();
@@ -13,7 +14,11 @@ const auth   = useUsuarioVerificacion();
 // ─── CARGA INICIAL ────────────────────────────────────────────────────────
 onMounted(async () => {
   if (!rutina.rutinaCreada) {
-    try { await rutina.cargarCatalogo(); } catch {}
+    try { 
+      
+      await rutina.cargarCatalogo(); 
+
+    } catch {}
   }
   inicializarSeries();
 });
@@ -27,8 +32,7 @@ const diasSemana = computed(() =>
 );
 const cantidadDias = computed(() => diasSemana.value.length || 1);
 
-// Día actual según la tarjeta seleccionada en /entrenamiento (query ?dia=... / ?numeroDia=...)
-// Restricción DB: 1 a 6
+// Número ordinal de la sesión elegida en /entrenamiento (1 a 6).
 const diaActual = computed(() => {
   const d = Number(route.query.numeroDia) || Number(route.query.dia) || diasSemana.value[0] || 1;
   return Math.min(6, Math.max(1, d));
@@ -155,7 +159,10 @@ onUnmounted(() => pausarCronometro());
 // ─── LOG ACUMULADO ────────────────────────────────────────────────────────
 interface EjercicioRegistrado {
   ejercicio_id?: string;
-  series:    { numero_serie: number; repeticiones: number; completada: boolean; peso_kg: number }[];
+  series:    { numero_serie: number; 
+                repeticiones: number; 
+                completada: boolean; 
+                peso_kg: number }[];
   xp_ganado: number;   // precisión completa, solo para sumar al final
 }
 const logEjercicios = ref<EjercicioRegistrado[]>([]);
@@ -194,12 +201,7 @@ function completarEjercicioActual() {
 const guardando    = ref(false);
 const errorMsg     = ref('');
 const modalVisible = ref(false);
-const resultado    = ref<{
-  xp_ganado:      number;
-  xp_total_nuevo: number;
-  nivel_nuevo:    number;
-  subio_de_nivel: boolean;
-} | null>(null);
+const resultado = ref<ResultadoSesion | null>(null);
 
 async function siguiente() {
   completarEjercicioActual();
@@ -229,15 +231,8 @@ async function siguiente() {
       auth.estadoSesion.usuarioConectado.nivel_actual = res.nivel_nuevo;
     }
 
-    // Reflejar inmediatamente el día completado en el store
-    if (rutina.rutinaCreada) {
-      if (!rutina.rutinaCreada.dias_completados) {
-        rutina.rutinaCreada.dias_completados = [];
-      }
-      if (!rutina.rutinaCreada.dias_completados.includes(diaNum)) {
-        rutina.rutinaCreada.dias_completados.push(diaNum);
-      }
-    }
+    // Recargar el estado persistido: puede haber avanzado a la próxima semana.
+    await rutina.cargarCatalogo();
 
     resultado.value = res;
     modalVisible.value = true; // Solo abrir modal si guardó exitosamente en la BD
@@ -250,11 +245,16 @@ async function siguiente() {
   }
 }
 
-function volver() { router.push('/entrenamiento'); }
+function volver() { 
+  
+  router.push('/entrenamiento'); 
+
+}
 </script>
 
 <template>
-  <main class="workout-wrap">
+<div>
+    <main class="workout-wrap">
 
     <!-- ── BARRA SUPERIOR ────────────────────────────────────────────── -->
     <div class="topbar">
@@ -487,6 +487,12 @@ function volver() { router.push('/entrenamiento'); }
             </div>
           </div>
 
+          <p class="modal-sub">
+            {{ resultado?.semana_completada ? '¡Semana completada!' : 'Progreso de la semana' }}
+            Semana {{ resultado?.semana_actual }}:
+            {{ resultado?.xp_semana }} / {{ resultado?.objetivo_xp_semanal }} XP
+          </p>
+
           <!-- Nivel up -->
           <div v-if="resultado?.subio_de_nivel" class="modal-levelup">
             🎉 ¡Subiste al Nivel {{ resultado.nivel_nuevo }}!
@@ -514,6 +520,11 @@ function volver() { router.push('/entrenamiento'); }
     </transition>
 
   </main>
+</div>
+
+<div>
+  <barra-inferior/>
+</div>
 </template>
 
 <style scoped>
@@ -1075,4 +1086,34 @@ function volver() { router.push('/entrenamiento'); }
 /* ─── Transición fade ─────────────────────────────────────────────────── */
 .fade-enter-active, .fade-leave-active { transition: opacity .25s; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
+
+
+.barra-inferior{
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .barra-inferior{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        background-color: #ff3b30;
+        position: fixed;        /* Lo fija a la ventana del navegador, ignorando el scroll */
+        bottom: 0;
+        width: 100vw;           /* Ocupa el 100% del ancho de la pantalla */
+        height: 50px;          /* Ocupa el 100% de la altura de la pantalla */
+        text-align: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+    }
+
+    h3{
+        color: #ffffff;
+        font-family: 'Rubik', sans-serif;
+        font-size: 15px;
+    }
+}
 </style>

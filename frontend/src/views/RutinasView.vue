@@ -6,6 +6,7 @@ import Header2 from '@/components/Header2.vue';
 import RutinaConfig from '@/components/RutinaConfig.vue';
 import { useUsuarioVerificacion } from '@/stores/auth.store';
 import { useEntrenamientoStore } from '@/stores/entrenamiento.store';
+import BarraInferior from '@/components/Barra-inferior.vue';
 
 const router = useRouter();
 const auth = useUsuarioVerificacion();
@@ -33,7 +34,8 @@ const irAEjercicios = (nivelId: number) => {
 </script>
 
 <template>
-  <div class="rutinas-container">
+<div>
+    <div class="rutinas-container">
     <RutinaConfig />
 
     <!-- 1. Barra Lateral del Usuario (Idéntica a PerfilView) -->
@@ -205,6 +207,11 @@ const irAEjercicios = (nivelId: number) => {
       </main>
     </div>
   </div>
+</div>
+
+<div>
+  <BarraInferior/>
+</div>
 </template>
 
 <style scoped>

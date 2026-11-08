@@ -60,10 +60,9 @@ export interface EjercicioLog {
     xp_ganado?: number;
 }
 
-// Columnas reales de sesiones_entrenamiento:
-//   id, usuario_id, fecha, duracion_segundos, estado, xp_otorgado, numero_dia
+// numero_dia es el ordinal de la sesión dentro de la planificación (1 a 6).
 export interface RegistrarSesionPayload {
-    numero_dia:      number;   // día de la semana entrenado
+    numero_dia:      number;
     xp_total_sesion: number;   // XP calculado en el frontend
     ejercicios:      EjercicioLog[];
 }
@@ -75,6 +74,12 @@ export interface ResultadoSesion {
     nivel_anterior: number;
     nivel_nuevo:    number;
     subio_de_nivel: boolean;
+    planificacion_id: string;
+    semana_actual: number;
+    xp_semana: number;
+    objetivo_xp_semanal: number;
+    estado_semana: 'activa' | 'completada';
+    semana_completada: boolean;
 }
 
 export function registrarSesion(datos: RegistrarSesionPayload): Promise<ResultadoSesion> {

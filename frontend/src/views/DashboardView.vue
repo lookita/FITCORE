@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Header2 from '@/components/Header2.vue';
 import BarraUsuario from '@/components/BarraUsuario.vue';
 import { useUsuarioVerificacion } from '@/stores/auth.store';
+import BarraInferior from '@/components/Barra-inferior.vue';
 
 interface ComentarioDTO {
   id: number;
@@ -143,6 +144,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
 </script>
 
 <template>
+<div>
   <section class="barra-main">
     <div class="columna-usuario">
       <BarraUsuario />
@@ -369,6 +371,11 @@ function agregarComentario(publicacion: PublicacionDTO): void {
       </main>
     </div>
   </section>
+</div>
+
+<div>
+  <BarraInferior/>
+</div>
 </template>
 
 <style scoped>

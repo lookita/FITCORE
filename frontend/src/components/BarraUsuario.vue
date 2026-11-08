@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useUsuarioVerificacion } from '@/stores/auth.store';
 import { useEntrenamientoStore } from '@/stores/entrenamiento.store';
+import {useRouter} from 'vue-router'
 
+const path = useRouter();
 const auth = useUsuarioVerificacion();
 const entrenoStore = useEntrenamientoStore();
 </script>
@@ -13,7 +15,9 @@ const entrenoStore = useEntrenamientoStore();
       <div class="brand-badge">
         <i class="bi bi-lightning-charge-fill"></i>
       </div>
-      <span class="brand-name">FITCORE</span>
+      <router-link to="/" >
+        <span class="brand-name">FITCORE</span>
+      </router-link>
     </div>
 
     <!-- 2. Tarjeta del Usuario Activo -->
@@ -27,8 +31,9 @@ const entrenoStore = useEntrenamientoStore();
         <span class="online-indicator"></span>
       </div>
       <div class="user-meta">
-        <h3 class="user-display-name">{{ auth.nombre || 'Lucas Fernández' }}</h3>
-        <p class="user-streak-text">Racha activa · {{ auth.rachaDias || 6 }} días</p>
+        <router-link to="/perfil" >
+          <h3 class="user-display-name">{{ auth.nombre}}</h3>
+        </router-link>
       </div>
       <div class="user-soundwave" title="Sesión activa">
         <span></span>
@@ -41,7 +46,6 @@ const entrenoStore = useEntrenamientoStore();
     <div class="sidebar-section">
       <div class="section-title-row">
         <span class="section-label">Amigos</span>
-        <span class="badge-amigos">6 ACTIVOS</span>
       </div>
       <div class="friends-grid-volt">
         <div v-for="amigo in entrenoStore.amigos" :key="amigo.id" class="friend-card">

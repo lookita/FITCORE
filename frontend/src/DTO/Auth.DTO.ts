@@ -58,4 +58,9 @@ export interface RutinaCreada {
     dias_semana: number[];
     dias_completados?: number[];
     ejercicios: EjercicioRutina[];
+    planificacion_id?: string | null;
+    semana_actual?: number;
+    xp_semana?: number;
+    objetivo_xp_semanal?: number;
+    estado_semana?: 'activa' | 'completada';
 }

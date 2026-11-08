@@ -19,7 +19,7 @@ export const useUsuarioVerificacion = defineStore('Autenticacion', {
         xpActual: (state): number => Number(state.estadoSesion.usuarioConectado?.xp_total || 0),
         xpSiguienteNivel: (state): number => {
             const nivel = Number(state.estadoSesion.usuarioConectado?.nivel_actual || 1);
-            return nivel * 500;
+            return nivel * 1000;
         },
         rango: (state): string => {
             const nivel = Number(state.estadoSesion.usuarioConectado?.nivel_actual || 1);

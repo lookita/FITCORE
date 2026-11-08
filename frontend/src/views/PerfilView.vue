@@ -5,6 +5,7 @@ import Header2 from '@/components/Header2.vue';
 import { useUsuarioVerificacion } from '@/stores/auth.store';
 import { useRutina } from '../stores/rutina.store'
 import {useEntrenamientoStore} from '../stores/entrenamiento.store'
+import BarraInferior from '@/components/Barra-inferior.vue';
 const datosUsuario = useUsuarioVerificacion(); 
 const rutina = useRutina();
 const xprequerido = useEntrenamientoStore();
@@ -20,7 +21,8 @@ const porcentajeProgreso = computed(() => {
 </script>
 
 <template>
-  <div class="perfil-container">
+<div>
+    <div class="perfil-container">
     <!-- Sidebar fija del usuario a la izquierda -->
     <BarraUsuario class="perfil-sidebar" />
 
@@ -129,6 +131,11 @@ const porcentajeProgreso = computed(() => {
       </main>
     </div>
   </div>
+</div>
+
+<div>
+  <BarraInferior/>
+</div>
 </template>
 
 <style scoped>

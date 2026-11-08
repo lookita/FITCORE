@@ -1,4 +1,4 @@
-
+import {} from '../'
 
 export const useUsuarioVerificacion = defineStore('Autenticacion',{
     state:() =>({
