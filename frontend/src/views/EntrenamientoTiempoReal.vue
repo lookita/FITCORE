@@ -308,6 +308,13 @@ function volver() {
               <span class="item-num">{{ String(idx + 1).padStart(2, '0') }}</span>
               <div class="item-texto">
                 <span class="item-nombre">{{ ej.nombre }}</span>
+                <img
+                  v-if="ej.imagen_url"
+                  class="item-imagen"
+                  :src="ej.imagen_url"
+                  :alt="`Imagen de ${ej.nombre}`"
+                  loading="lazy"
+                />
                 <span class="item-sub">{{ ej.series_objetivo }}×{{ ej.reps_objetivo }}</span>
               </div>
               <span class="item-estado">
@@ -322,13 +329,18 @@ function volver() {
 
           <!-- Cabecera del ejercicio -->
           <div class="ej-header">
-            <div>
+            <div class="ej-maximo">
               <span class="eyebrow">EJERCICIO ACTUAL</span>
               <h2 class="ej-titulo">{{ ejercicioActual.nombre }}</h2>
-            </div>
-            <div class="xp-total-pill">
-              <i class="bi bi-lightning-charge-fill"></i>
-              {{ xpPorEjercicioEntero }} XP
+              <img
+                v-if="ejercicioActual.imagen_url"
+                class="ej-imagen"
+                :src="ejercicioActual.imagen_url"
+                :alt="`Imagen de ${ejercicioActual.nombre}`"
+              />
+              <p>
+                {{ ejercicioActual.descripcion }}
+              </p>
             </div>
           </div>
 
@@ -689,6 +701,14 @@ function volver() {
 
 .item-nombre { display: block; font-size: 13px; font-weight: 600; }
 .item-sub    { display: block; font-size: 11px; color: #71717a; margin-top: 1px; }
+.item-imagen {
+  display: block;
+  width: min(100%, 180px);
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 8px;
+}
 .item-estado { font-size: 14px; color: #52525b; text-align: right; }
 .item-activo .item-estado { color: #ff3b30; }
 .item-hecho  .item-estado { color: #22c55e; }
@@ -710,10 +730,19 @@ function volver() {
   justify-content: space-between;
   align-items: flex-start;
 }
+
+
 .ej-titulo {
   font-size: 26px;
   font-weight: 800;
   margin: 6px 0 0;
+}
+.ej-imagen {
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+  border-radius: 12px;
+  margin-top: 16px;
 }
 .xp-total-pill {
   display: flex;
@@ -1115,5 +1144,15 @@ function volver() {
         font-family: 'Rubik', sans-serif;
         font-size: 15px;
     }
+
+    .ej-imagen {
+        display: block;
+        width: min(100%, 440px);
+        max-height: 300px;
+        object-fit: contain;
+        object-position: left center;
+        border-radius: 12px;
+        margin-top: 16px;
+      }
 }
 </style>

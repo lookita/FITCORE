@@ -46,6 +46,8 @@ export interface CrearRutinaPayload {
 export interface EjercicioRutina {
     id: string;
     nombre: string;
+    imagen_url?: string | null;
+    descripcion: string | null;
     series_objetivo: number;
     reps_objetivo: number;
 }
