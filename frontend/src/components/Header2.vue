@@ -61,37 +61,7 @@ const cerrar = async () => {
         </ul>
       </nav>
 
-      <!-- Botón de tres rayitas para celular -->
-      <button
-        type="button"
-        class="boton-rayitas"
-        aria-label="Abrir menú"
-        @click="abrirMenu = !abrirMenu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
 
-      <!-- Menú que se abre en celular -->
-      <nav v-if="abrirMenu" class="menu-celular">
-        <ul class="lista-celular">
-          <li v-for="item in menu" :key="item.name">
-            <router-link
-              class="enlace-celular"
-              :to="item.path"
-              @click="abrirMenu = false"
-            >
-              {{ item.name }}
-            </router-link>
-          </li>
-          <li v-if="usuario.estaAutenticado">
-            <button class="enlace-celular boton-salir-celular" @click="cerrar">
-              Cerrar Sesión
-            </button>
-          </li>
-        </ul>
-      </nav>
 
       <!-- Cositas de la derecha: campanita, botón de acción y cerrar sesión -->
       <div class="lado-derecho">

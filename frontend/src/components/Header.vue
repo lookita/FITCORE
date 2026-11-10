@@ -46,33 +46,6 @@ const abrirMenu = ref<boolean>(false);
         </ul>
       </nav>
 
-      <!-- Botón de tres rayitas para celular -->
-      <button
-        type="button"
-        class="boton-rayitas"
-        aria-label="Abrir menú"
-        @click="abrirMenu = !abrirMenu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <!-- Menú que se abre en celular -->
-      <nav v-if="abrirMenu" class="menu-celular">
-        <ul class="lista-celular">
-          <li v-for="item in menu" :key="item.name">
-            <router-link
-              class="enlace-celular"
-              :to="item.path"
-              @click="abrirMenu = false"
-            >
-              {{ item.name }}
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-
       <!-- Cositas de la derecha: campanita y botón de pedir demo -->
       <div class="lado-derecho">
         <button class="boton-campana" aria-label="Notificaciones">
