@@ -6,13 +6,14 @@
     "frontend",
     "packages/*"
   ],
-  "scripts": {
+"scripts": {
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev": "npm run dev:frontend",
     "build:frontend": "npm run build --workspace=frontend",
     "build:shared": "npm run build --workspace=@fitcore/shared",
     "build": "npm run build:shared && npm run build:frontend",
-    "lint": "npm run lint --workspaces --if-present"
+    "lint": "npm run lint --workspaces --if-present",
+    "electron": "electron frontend/main.js"
   },
   "engines": {
     "node": ">=20.0.0",
