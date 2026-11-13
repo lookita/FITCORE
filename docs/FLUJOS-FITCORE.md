@@ -448,9 +448,9 @@ El texto se puede adaptar al tiempo disponible. Para una exposición breve se pu
 
 ### Cuidado con los esquemas de referencia
 
-> “En `archivos md` hay un archivo `fitcore_schema.sql` y documentos técnicos que describen esquemas y etapas anteriores. Esos materiales son útiles para entender la evolución del diseño, pero no todos coinciden con la estructura real que utiliza actualmente el backend.
+> “Los esquemas históricos de referencia fueron retirados del repositorio porque no coinciden completamente con las tablas y columnas que utiliza actualmente el backend.
 >
-> Por ejemplo, puede haber diferencias entre nombres de columnas, relaciones o tablas. Por eso no se debe ejecutar un esquema antiguo sobre la base de datos actual sin compararlo con la estructura real y sin hacer un respaldo. El esquema efectivo es el que realmente existe en PostgreSQL y el que consultan los endpoints que Apache está ejecutando.”
+> No se debe ejecutar un esquema antiguo sobre la base de datos actual. La fuente de verdad es la estructura que existe en PostgreSQL y que consultan los endpoints PHP.”
 
 ---
 
@@ -516,7 +516,7 @@ El texto se puede adaptar al tiempo disponible. Para una exposición breve se pu
 >
 > `query` aparece en la raíz, pero no se observa como parte del flujo frontend/backend descrito. Si se va a presentar, conviene identificar primero qué contiene y si está vigente.
 >
-> También existe `setup-monorepo.ps1`, que es un script de configuración de una etapa de reorganización. Sus rutas y comprobaciones hacen referencia a carpetas llamadas `Back` y `frontend`, mientras que la estructura observada usa `Frontend` y el backend PHP vive en otra ubicación. Por ese motivo no lo presento como el método actual de instalación y no conviene ejecutarlo sin revisar y actualizarlo.”
+> El antiguo `setup-monorepo.ps1` fue retirado: asumía una estructura de carpetas `Back`/`frontend` y podía borrar dependencias locales.”
 
 ---
 
@@ -682,13 +682,13 @@ La carpeta que se inspeccionó es `C:\Apache24\htdocs\Backend`. No forma parte d
 
 `GeneradorEntrenamiento.php` carga catálogo y rutina existente. `Generador_rutina.php` procesa la configuración y persiste la rutina. `registrar_sesion.php` guarda sesiones, series y XP.
 
-`perfil.php` consulta un perfil por ID, pero no valida el token en el código revisado. `diagnostico.php` y `inspeccionar_constraints.php` sirven para inspeccionar datos o restricciones y son herramientas administrativas; no son pantallas del recorrido normal del usuario. `consultar_araceli.php` parece un script de consulta de datos específico, no una API general del producto. `constraints_dump.json` es un artefacto de inspección de restricciones, no una tabla ni un flujo de ejecución.
+`perfil.php` consulta un perfil por ID, pero no valida el token en el código revisado. `diagnostico.php` y `inspeccionar_constraints.php` sirven para inspeccionar datos o restricciones y son herramientas administrativas; no son pantallas del recorrido normal del usuario. `consultar_araceli.php` parece un script de consulta de datos específico, no una API general del producto. `inspeccionar_constraints.php` puede generar un volcado JSON al ejecutarse; ese resultado no es una tabla ni parte del flujo de la aplicación.
 
 ## Base de datos
 
 `database/migrations` y `database/seeds` están destinadas a administrar cambios de esquema y datos iniciales, respectivamente. Sus README describen el propósito, pero no se encontraron migraciones o seeds de PostgreSQL activas en esas carpetas.
 
-`archivos md/fitcore_schema.sql` es un esquema documental de referencia. Se debe comparar con la base efectiva antes de ejecutarlo, porque hay diferencias entre documentos históricos y la estructura que utilizan los PHP actuales.
+No se mantiene un archivo SQL de esquema de referencia en el repositorio. Antes de modificar la base de datos, se debe verificar su estructura efectiva y las consultas que utilizan los PHP actuales.
 
 ## Paquete compartido y monorepo
 
