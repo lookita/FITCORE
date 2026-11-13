@@ -19,8 +19,6 @@ const xpMeta = 100;
 const xpRestante = computed(() => Math.max(xpMeta - xpActual.value, 0));
 const porcentajeXp = computed(() => Math.min(Math.round((xpActual.value / xpMeta) * 100), 100));
 
-// Títulos dinámicos según el nivel
-
 
 // Los 10 niveles divididos en dos filas de 5 columnas
 const nivelesFila1 = computed(() => entrenoStore.catalogoNiveles.slice(0, 5));
@@ -35,46 +33,40 @@ const irAEjercicios = (nivelId: number) => {
 
 <template>
 <div>
-    <div class="rutinas-container">
+    <div class="rutinas-contenedor">
     <RutinaConfig />
 
-    <!-- 1. Barra Lateral del Usuario (Idéntica a PerfilView) -->
-    <BarraUsuario class="rutinas-sidebar" />
+    <!-- 1. Barra Lateral del Usuario -->
+    <BarraUsuario class="rutinas-barra-lateral" />
 
     <!-- 2. Área de Contenido con Header2 Compartido -->
-    <div class="rutinas-content-wrapper">
+    <div class="rutinas-envoltorio-contenido">
       
       <!-- Header2 global y consistente con Inicio y Perfil -->
-      <Header2 :nombre="auth.nombre || 'Atleta'" class="rutinas-topbar" />
+      <Header2 :nombre="auth.nombre || 'Atleta'" class="rutinas-barra-superior" />
 
       <!-- Cuerpo principal con scroll independiente -->
-      <main class="rutinas-body-scroll">
+      <main class="rutinas-cuerpo-desplazable">
         
         <!-- Título de la página -->
-        <div class="rutinas-header-intro">
-          <span class="eyebrow-accent">ENTRENA. AVANZA. SUPÉRATE.</span>
-          <h1 class="page-title">Rutinas</h1>
-          <p class="page-subtitle">
+        <div class="rutinas-encabezado-intro">
+          <h1 class="titulo-pagina">Rutinas</h1>
+          <p class="subtitulo-pagina">
             Tu camino del nivel 1 al 10. Cada nivel se desbloquea al completar el anterior.
           </p>
         </div>
 
-        <!-- SECCIÓN: TU PROGRESIÓN (Grilla 5x2 de Niveles) -->
+        <!-- TU PROGRESIÓN  -->
         <section class="seccion-progresion">
           
           <!-- Cabecera de progresión -->
           <div class="cabecera-progresion">
             <h2 class="titulo-progresion">Tu progresión</h2>
-            <div class="tags-progresion">
-              <span class="tag-disponible">{{ entrenoStore.nivelesDesbloqueados }} DISPONIBLE</span>
-              <span class="tag-bloqueados">{{ entrenoStore.nivelesBloqueados }} niveles bloqueados</span>
-            </div>
           </div>
 
           <!-- Fila 1 de Niveles: 01 → 05 -->
           <div class="subfila-guia">
             <span class="rango-texto">01 → 05</span>
-            <span class="guia-texto">Avanza en orden, de izquierda a derecha</span>
           </div>
 
           <div class="grilla-niveles-volt">
@@ -90,18 +82,12 @@ const irAEjercicios = (nivelId: number) => {
                 }
               ]"
             >
-              <div class="card-top-row">
-                <span class="card-code">{{ nivel.codigo }} / 10</span>
-                <span v-if="nivel.id === nivelActual" class="badge-actual">ACTUAL</span>
-                <span v-else-if="nivel.id < nivelActual" class="badge-completado"><i class="bi bi-check-lg"></i></span>
-                <i v-else class="bi bi-lock-fill icono-candado"></i>
-              </div>
 
-              <h3 class="card-nivel-nombre">{{ nivel.titulo }}</h3>
+              <h3 class="tarjeta-nivel-nombre">{{ nivel.titulo }}</h3>
 
-              <div class="card-bottom-row">
+              <div class="tarjeta-fila-inferior">
                 <template v-if="nivel.id === nivelActual">
-                  <span class="status-disponible">Disponible · En progreso</span>
+                  <span class="estado-disponible">Disponible</span>
                   <button class="btn-ver-ejercicios" @click="irAEjercicios(nivel.id)">
                     <span>Ver ejercicios</span>
                     <i class="bi bi-arrow-right"></i>
@@ -109,14 +95,14 @@ const irAEjercicios = (nivelId: number) => {
                 </template>
 
                 <template v-else-if="nivel.id < nivelActual">
-                  <span class="status-listo">Completado</span>
+                  <span class="estado-listo">Completado</span>
                   <button class="btn-repasar" @click="irAEjercicios(nivel.id)">
                     Repasar
                   </button>
                 </template>
 
                 <template v-else>
-                  <span class="status-bloqueado">Bloqueado</span>
+                  <span class="estado-bloqueado">Bloqueado</span>
                   <p class="texto-requisito">
                     Completa el nivel {{ nivel.id - 1 }} para desbloquear
                   </p>
@@ -144,18 +130,15 @@ const irAEjercicios = (nivelId: number) => {
                 }
               ]"
             >
-              <div class="card-top-row">
-                <span class="card-code">{{ nivel.codigo }} / 10</span>
-                <span v-if="nivel.id === nivelActual" class="badge-actual">ACTUAL</span>
-                <span v-else-if="nivel.id < nivelActual" class="badge-completado"><i class="bi bi-check-lg"></i></span>
-                <i v-else class="bi bi-lock-fill icono-candado"></i>
+              <div class="tarjeta-fila-superior">
+                <span class="tarjeta-codigo">{{ nivel.codigo }} / 10</span>
               </div>
 
-              <h3 class="card-nivel-nombre">{{ nivel.titulo }}</h3>
+              <h3 class="tarjeta-nivel-nombre">{{ nivel.titulo }}</h3>
 
-              <div class="card-bottom-row">
+              <div class="tarjeta-fila-inferior">
                 <template v-if="nivel.id === nivelActual">
-                  <span class="status-disponible">Disponible · En progreso</span>
+                  <span class="estado-disponible">Disponible · En progreso</span>
                   <button class="btn-ver-ejercicios" @click="irAEjercicios(nivel.id)">
                     <span>Ver ejercicios</span>
                     <i class="bi bi-arrow-right"></i>
@@ -163,14 +146,14 @@ const irAEjercicios = (nivelId: number) => {
                 </template>
 
                 <template v-else-if="nivel.id < nivelActual">
-                  <span class="status-listo">Completado</span>
+                  <span class="estado-listo">Completado</span>
                   <button class="btn-repasar" @click="irAEjercicios(nivel.id)">
                     Repasar
                   </button>
                 </template>
 
                 <template v-else>
-                  <span class="status-bloqueado">Bloqueado</span>
+                  <span class="estado-bloqueado">Bloqueado</span>
                   <p class="texto-requisito">
                     Completa el nivel {{ nivel.id - 1 }} para desbloquear
                   </p>
@@ -181,23 +164,23 @@ const irAEjercicios = (nivelId: number) => {
 
         </section>
 
-        <!-- CALLOUT INFORMATIVO (Un nivel a la vez) -->
-        <div class="callout-informativo">
-          <div class="callout-icono-box">
+        <!-- AVISO INFORMATIVO (Un nivel a la vez) -->
+        <div class="aviso-informativo">
+          <div class="aviso-caja-icono">
             <i class="bi bi-lock-fill"></i>
           </div>
-          <div class="callout-textos">
-            <h4 class="callout-titulo">Un nivel a la vez. Un paso más cerca.</h4>
-            <p class="callout-p">
+          <div class="aviso-textos">
+            <h4 class="aviso-titulo">Un nivel a la vez. Un paso más cerca.</h4>
+            <p class="aviso-parrafo">
               Completa los ejercicios y alcanza los 100 XP de tu nivel para desbloquear el siguiente. Por ahora, solo puedes entrenar en el nivel {{ nivelActual }}.
             </p>
           </div>
         </div>
 
-        <!-- FOOTER DISCRETO -->
-        <footer class="footer-rutinas">
+        <!-- PIE DISCRETO -->
+        <footer class="pie-rutinas">
           <span>© 2026 FITCORE · Cada repetición suma</span>
-          <div class="footer-links">
+          <div class="pie-enlaces">
             <a href="#">Privacidad</a>
             <a href="#">Términos</a>
             <a href="#">Ayuda</a>
@@ -216,9 +199,9 @@ const irAEjercicios = (nivelId: number) => {
 
 <style scoped>
 /* ==========================================
-   LAYOUT Y ESTRUCTURA (Exactamente como PerfilView)
+   LAYOUT Y ESTRUCTURA
 ========================================== */
-.rutinas-container {
+.rutinas-contenedor {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -229,13 +212,13 @@ const irAEjercicios = (nivelId: number) => {
   color: #ffffff;
 }
 
-.rutinas-sidebar {
+.rutinas-barra-lateral {
   flex-shrink: 0;
   width: 270px;
   height: 100vh;
 }
 
-.rutinas-content-wrapper {
+.rutinas-envoltorio-contenido {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -244,11 +227,11 @@ const irAEjercicios = (nivelId: number) => {
   background-color: #0c0c0e;
 }
 
-.rutinas-topbar {
+.rutinas-barra-superior {
   flex-shrink: 0;
 }
 
-.rutinas-body-scroll {
+.rutinas-cuerpo-desplazable {
   flex: 1;
   overflow-y: auto;
   padding: 32px 40px 60px 40px;
@@ -261,20 +244,13 @@ const irAEjercicios = (nivelId: number) => {
 /* ==========================================
    ENCABEZADO DE LA PÁGINA
 ========================================== */
-.rutinas-header-intro {
+.rutinas-encabezado-intro {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.eyebrow-accent {
-  color: #eab308;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-}
-
-.page-title {
+.titulo-pagina {
   font-size: 2.2rem;
   font-weight: 900;
   margin: 0;
@@ -282,148 +258,10 @@ const irAEjercicios = (nivelId: number) => {
   letter-spacing: -0.5px;
 }
 
-.page-subtitle {
+.subtitulo-pagina {
   color: #a1a1aa;
   font-size: 0.9rem;
   margin: 2px 0 0 0;
-}
-
-/* ==========================================
-   HERO BANNER (Nivel Actual + Barra XP)
-========================================== */
-.banner-progreso-hero {
-  background: #141417;
-  border: 1px solid #222226;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  min-height: 155px;
-}
-
-.banner-nivel-box {
-  background: #101012;
-  border: 1px solid #1f1f23;
-  border-radius: 14px;
-  margin: 18px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 105px;
-  flex-shrink: 0;
-  z-index: 2;
-}
-
-.icono-rayo-dorado {
-  color: #eab308;
-  font-size: 1.25rem;
-  margin-bottom: 2px;
-}
-
-.numero-nivel-grande {
-  font-size: 2.3rem;
-  font-weight: 900;
-  line-height: 1;
-  color: #ffffff;
-}
-
-.etiqueta-nivel-peq {
-  font-size: 0.62rem;
-  font-weight: 800;
-  color: #eab308;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
-}
-
-.banner-info-central {
-  flex: 1;
-  padding: 18px 24px 18px 6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 2;
-  min-width: 280px;
-}
-
-.banner-titulo {
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin: 0 0 4px 0;
-  color: #ffffff;
-}
-
-.banner-descripcion {
-  font-size: 0.85rem;
-  color: #a1a1aa;
-  margin: 0 0 14px 0;
-}
-
-.banner-xp-cifras {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.8rem;
-  margin-bottom: 6px;
-}
-
-.xp-actual-tag {
-  color: #eab308;
-  font-weight: 800;
-}
-
-.xp-falta-tag {
-  color: #71717a;
-  font-weight: 500;
-}
-
-.barra-xp-fondo {
-  width: 100%;
-  height: 6px;
-  background: #27272a;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-
-.barra-xp-relleno {
-  height: 100%;
-  background: linear-gradient(90deg, #ff3b30 0%, #eab308 100%);
-  border-radius: 3px;
-  transition: width 0.4s ease;
-}
-
-.nota-bloqueo {
-  font-size: 0.72rem;
-  color: #71717a;
-}
-
-.banner-foto-gym {
-  width: 320px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.banner-foto-gym img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.85;
-}
-
-.foto-degradado-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #141417 0%, rgba(20, 20, 23, 0.7) 40%, transparent 100%);
 }
 
 /* ==========================================
@@ -446,29 +284,6 @@ const irAEjercicios = (nivelId: number) => {
   font-weight: 800;
   margin: 0;
   color: #ffffff;
-}
-
-.tags-progresion {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.tag-disponible {
-  background: rgba(234, 179, 8, 0.12);
-  border: 1px solid rgba(234, 179, 8, 0.3);
-  color: #eab308;
-  font-size: 0.7rem;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 12px;
-  letter-spacing: 0.4px;
-}
-
-.tag-bloqueados {
-  color: #71717a;
-  font-size: 0.78rem;
-  font-weight: 500;
 }
 
 .subfila-guia {
@@ -519,40 +334,20 @@ const irAEjercicios = (nivelId: number) => {
   background: rgba(34, 197, 94, 0.03);
 }
 
-.card-top-row {
+.tarjeta-fila-superior {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.card-code {
+.tarjeta-codigo {
   font-size: 0.72rem;
   color: #71717a;
   font-weight: 600;
 }
 
-.badge-actual {
-  background: rgba(255, 59, 48, 0.2);
-  color: #ff3b30;
-  font-size: 0.62rem;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-}
-
-.badge-completado {
-  color: #22c55e;
-  font-size: 0.9rem;
-}
-
-.icono-candado {
-  color: #52525b;
-  font-size: 0.85rem;
-}
-
-.card-nivel-nombre {
+.tarjeta-nivel-nombre {
   font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
@@ -560,14 +355,14 @@ const irAEjercicios = (nivelId: number) => {
   letter-spacing: -0.2px;
 }
 
-.card-bottom-row {
+.tarjeta-fila-inferior {
   margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.status-disponible {
+.estado-disponible {
   color: #eab308;
   font-size: 0.75rem;
   font-weight: 600;
@@ -595,7 +390,7 @@ const irAEjercicios = (nivelId: number) => {
   transform: translateY(-1px);
 }
 
-.status-listo {
+.estado-listo {
   color: #22c55e;
   font-size: 0.75rem;
   font-weight: 600;
@@ -618,7 +413,7 @@ const irAEjercicios = (nivelId: number) => {
   border-color: #52525b;
 }
 
-.status-bloqueado {
+.estado-bloqueado {
   color: #71717a;
   font-size: 0.75rem;
   font-weight: 500;
@@ -632,9 +427,9 @@ const irAEjercicios = (nivelId: number) => {
 }
 
 /* ==========================================
-   CALLOUT INFORMATIVO (Un nivel a la vez)
+   AVISO INFORMATIVO (Un nivel a la vez)
 ========================================== */
-.callout-informativo {
+.aviso-informativo {
   background: #141417;
   border: 1px solid #222226;
   border-radius: 14px;
@@ -644,7 +439,7 @@ const irAEjercicios = (nivelId: number) => {
   gap: 16px;
 }
 
-.callout-icono-box {
+.aviso-caja-icono {
   width: 38px;
   height: 38px;
   background: rgba(234, 179, 8, 0.12);
@@ -658,20 +453,20 @@ const irAEjercicios = (nivelId: number) => {
   flex-shrink: 0;
 }
 
-.callout-textos {
+.aviso-textos {
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
 
-.callout-titulo {
+.aviso-titulo {
   font-size: 0.92rem;
   font-weight: 800;
   margin: 0;
   color: #ffffff;
 }
 
-.callout-p {
+.aviso-parrafo {
   font-size: 0.78rem;
   color: #a1a1aa;
   margin: 0;
@@ -679,9 +474,9 @@ const irAEjercicios = (nivelId: number) => {
 }
 
 /* ==========================================
-   FOOTER DISCRETO
+   PIE DISCRETO
 ========================================== */
-.footer-rutinas {
+.pie-rutinas {
   margin-top: 10px;
   padding-top: 20px;
   border-top: 1px solid #1a1a1e;
@@ -692,36 +487,36 @@ const irAEjercicios = (nivelId: number) => {
   font-size: 0.75rem;
 }
 
-.footer-links {
+.pie-enlaces {
   display: flex;
   gap: 16px;
 }
 
-.footer-links a {
+.pie-enlaces a {
   color: #52525b;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.footer-links a:hover {
+.pie-enlaces a:hover {
   color: #a1a1aa;
 }
 
 /* Scrollbar fina */
-.rutinas-body-scroll::-webkit-scrollbar {
+.rutinas-cuerpo-desplazable::-webkit-scrollbar {
   width: 6px;
 }
 
-.rutinas-body-scroll::-webkit-scrollbar-track {
+.rutinas-cuerpo-desplazable::-webkit-scrollbar-track {
   background: #0c0c0e;
 }
 
-.rutinas-body-scroll::-webkit-scrollbar-thumb {
+.rutinas-cuerpo-desplazable::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 4px;
 }
 
-.rutinas-body-scroll::-webkit-scrollbar-thumb:hover {
+.rutinas-cuerpo-desplazable::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
 
@@ -732,31 +527,23 @@ const irAEjercicios = (nivelId: number) => {
   .grilla-niveles-volt {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .banner-foto-gym {
-    width: 240px;
-  }
 }
 
 @media (max-width: 900px) {
-  .rutinas-container {
+  .rutinas-contenedor {
     flex-direction: row;
     height: auto;
     min-height: 100vh;
     overflow: visible;
   }
 
-  .rutinas-sidebar {
+  .rutinas-barra-lateral {
     display: none;
   }
 
-  .rutinas-content-wrapper {
+  .rutinas-envoltorio-contenido {
     height: auto;
     min-height: 100vh;
-  }
-
-  .banner-foto-gym {
-    display: none;
   }
 
   .grilla-niveles-volt {
@@ -765,7 +552,7 @@ const irAEjercicios = (nivelId: number) => {
 }
 
 @media (max-width: 600px) {
-  .rutinas-body-scroll {
+  .rutinas-cuerpo-desplazable {
     padding: 20px 16px;
   }
 
@@ -773,7 +560,7 @@ const irAEjercicios = (nivelId: number) => {
     grid-template-columns: 1fr;
   }
 
-  .page-title {
+  .titulo-pagina {
     font-size: 1.8rem;
   }
 }

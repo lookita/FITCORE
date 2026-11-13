@@ -121,7 +121,7 @@ const listaNiveles = ref([
               :key="item.nivel"
               :class="['tarjeta-nivel', { 'desbloqueado': item.nivel <= datosUsuario.nivel, 'bloqueado': item.nivel > datosUsuario.nivel }]"
             >
-              <div class="fila-nivel-header">
+              <div class="fila-nivel-cabecera">
                 <span class="pildora-numero">NIVEL {{ item.nivel }}</span>
                 <span v-if="item.nivel <= datosUsuario.nivel" class="candado-abierto">
                   <i class="bi bi-unlock-fill"></i> Desbloqueado
@@ -391,7 +391,7 @@ const listaNiveles = ref([
   box-shadow: 0 0 14px rgba(255, 59, 48, 0.15);
 }
 
-.fila-nivel-header {
+.fila-nivel-cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;

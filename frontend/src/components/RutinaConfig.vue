@@ -44,13 +44,10 @@ function alternarDia(diaId: number) {
   }
 }
 
-// ==============================================================
-// ARQUITECTURA FITCORE - MOTOR GENERADOR:
-// - 1 a 3 días: Full Body
-// - 4 días: Upper / Lower
-// - 5 días: Push / Pull / Legs
-// - 6 días: Push / Pull / Legs × 2
-// ==============================================================
+
+
+// GENERADORR RUTINASSS
+
 watch(cantidadDias, (dias) => {
   rutina.error = '';
   if (dias >= 1 && dias <= 3) {
@@ -142,8 +139,8 @@ defineExpose({ abrir, cerrar });
     </button>
 
     <!-- Ventana Modal del Generador -->
-    <div v-if="visible" class="rutina-config-overlay">
-      <section class="rutina-config-dialog">
+    <div v-if="visible" class="superposicion-config-rutina">
+      <section class="dialogo-config-rutina">
 
         <!-- Botón cerrar (X) -->
         <button class="boton-cerrar" type="button" @click="cerrar">
@@ -223,12 +220,12 @@ defineExpose({ abrir, cerrar });
           </div>
 
           <!-- MENSAJE EXPLICATIVO DE LA REGLA SEGÚN LOS DÍAS ELEGIDOS -->
-          <div v-if="cantidadDias === 0" class="aviso-regla aviso-info">
+          <div v-if="cantidadDias === 0" class="aviso-regla aviso-informacion">
             <i class="bi bi-info-circle-fill"></i>
             <span>Toca arriba entre 1 y 6 días de la semana en los que realizarás tus entrenamientos.</span>
           </div>
 
-          <div v-else-if="cantidadDias <= 3" class="aviso-regla aviso-fullbody">
+          <div v-else-if="cantidadDias <= 3" class="aviso-regla aviso-cuerpo-completo">
             <i class="bi bi-shield-check"></i>
             <div>
               <strong>Regla para {{ cantidadDias }} {{ cantidadDias === 1 ? 'día' : 'días' }}: Full Body</strong>
@@ -353,7 +350,7 @@ defineExpose({ abrir, cerrar });
   transform: translateY(-2px);
 }
 
-.rutina-config-overlay {
+.superposicion-config-rutina {
   position: fixed;
   top: 0;
   left: 0;
@@ -371,7 +368,7 @@ defineExpose({ abrir, cerrar });
   box-sizing: border-box;
 }
 
-.rutina-config-dialog {
+.dialogo-config-rutina {
   width: 100%;
   max-width: 820px;
   max-height: 90vh;
@@ -562,20 +559,20 @@ defineExpose({ abrir, cerrar });
   margin: 0;
 }
 
-.aviso-info {
+.aviso-informacion {
   background: #141418;
   border: 1px dashed #3f3f46;
   color: #a1a1aa;
   align-items: center;
 }
 
-.aviso-fullbody {
+.aviso-cuerpo-completo {
   background: rgba(234, 179, 8, 0.1);
   border: 1px solid rgba(234, 179, 8, 0.3);
   color: #fde047;
 }
 
-.aviso-fullbody i {
+.aviso-cuerpo-completo i {
   font-size: 20px;
   color: #eab308;
 }
@@ -595,21 +592,6 @@ defineExpose({ abrir, cerrar });
 .campo-rutina {
   display: grid;
   gap: 8px;
-}
-
-.campo-rutina select {
-  width: 100%;
-  padding: 12px 14px;
-  color: #ffffff;
-  background: #101012;
-  border: 1px solid #303034;
-  border-radius: 10px;
-  font-size: 14px;
-  outline: none;
-}
-
-.campo-rutina select:focus {
-  border-color: #ff3b30;
 }
 
 .caja-fijada {

@@ -32,33 +32,4 @@ onMounted(() => {
   background-color: #0c0c0e;
   min-height: 100vh;
 }
-
-.barra-inferior{
-    display: none;
-}
-
-@media (max-width: 900px) {
-    .barra-inferior{
-        display: grid;
-        grid-template-columns: repeat(3, auto);
-        background-color: #ff3b30;
-        position: fixed;        /* Lo fija a la ventana del navegador, ignorando el scroll */
-        bottom: 0;
-        width: 100vw;           /* Ocupa el 100% del ancho de la pantalla */
-        height: 50px;          /* Ocupa el 100% de la altura de la pantalla */
-        text-align: center;
-        align-items: center;
-        padding: 0;
-        margin: 0;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-
-    }
-
-    h3{
-        color: #ffffff;
-        font-family: 'Rubik', sans-serif;
-        font-size: 15px;
-    }
-}
 </style>

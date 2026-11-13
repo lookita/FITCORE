@@ -81,7 +81,7 @@ const iniciarSesion = (): void => {
       </div>
 
       <!-- Si YA está autenticado -->
-      <div v-else class="sesion-activa-box">
+      <div v-else class="caja-sesion-activa">
         <span class="etiqueta-roja">SESIÓN ACTIVA</span>
         <h2 class="titulo-tarjeta">¡Hola, {{ datos.estadoSesion.usuarioConectado?.nombre}}!</h2>
         <p class="subtitulo-tarjeta">Ya tienes una sesión iniciada en tu cuenta.</p>
@@ -270,7 +270,7 @@ const iniciarSesion = (): void => {
 }
 
 /* Sesión activa */
-.sesion-activa-box {
+.caja-sesion-activa {
   display: flex;
   flex-direction: column;
   gap: 12px;

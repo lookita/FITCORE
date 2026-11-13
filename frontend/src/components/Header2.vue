@@ -72,7 +72,7 @@ const cerrar = async () => {
           <span class="puntito-rojo"></span>
         </button>
 
-        <router-link to="/rutinas" class="boton-rojo">
+        <router-link to="/entrenamiento" class="boton-rojo">
           <i class="bi bi-play-fill"></i>
           <span>Entrenar</span>
         </router-link>
@@ -261,77 +261,9 @@ const cerrar = async () => {
   border-color: #ef4444;
 }
 
-.boton-salir-celular {
-  background: transparent;
-  border: none;
-  color: #ef4444;
-  cursor: pointer;
-  text-align: left;
-  font-weight: 700;
-  padding: 12px 16px;
-  width: 100%;
-}
-
-/* Celular */
-.boton-rayitas {
-  display: none;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.boton-rayitas span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background-color: #fff;
-  border-radius: 2px;
-}
-
-.menu-celular {
-  display: none;
-  position: absolute;
-  top: 76px;
-  left: 0;
-  width: 100%;
-  background: #121214;
-  border-bottom: 1px solid #222226;
-  z-index: 99;
-}
-
-.lista-celular {
-  list-style: none;
-  margin: 0;
-  padding: 16px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.enlace-celular {
-  text-decoration: none;
-  color: #a1a1aa;
-  font-size: 1rem;
-  font-weight: 600;
-  display: block;
-  padding: 8px 0;
-}
-
 @media (max-width: 768px) {
   .menu-grande {
     display: none;
-  }
-  .boton-rayitas {
-    display: flex;
-  }
-  .menu-celular {
-    display: block;
   }
   .caja-barra {
     padding: 16px 20px;

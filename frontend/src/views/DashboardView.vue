@@ -150,29 +150,18 @@ function agregarComentario(publicacion: PublicacionDTO): void {
       <BarraUsuario />
     </div>
 
-    <div class="dashboard-page">
+    <div class="pagina-panel">
       <Header2 />
 
-      <main class="feed-container">
-        <div class="feed-columna">
-          <header class="feed-encabezado">
-            <div>
-              <span class="feed-eyebrow">COMUNIDAD FITCORE</span>
-              <h1>Tu comunidad</h1>
-              <p>Comparte tus avances y celebra cada repetición.</p>
-            </div>
-            <span class="comunidad-activa">
-              <i class="bi bi-circle-fill" aria-hidden="true"></i>
-              Atletas activos
-            </span>
-          </header>
+      <main class="contenedor-feed">
+        <div class="columna-feed">
 
           <section class="compositor tarjeta-feed" aria-label="Crear publicación">
             <div class="fila-compositor">
               <div class="avatar avatar-propio" aria-hidden="true">
                 {{ inicialesDe(auth.nombre) }}
               </div>
-              <label class="sr-only" for="texto-publicacion">¿Qué estás pensando?</label>
+              <label class="solo-lectores" for="texto-publicacion">¿Qué estás pensando?</label>
               <textarea
                 id="texto-publicacion"
                 v-model="textoPublicacion"
@@ -183,37 +172,13 @@ function agregarComentario(publicacion: PublicacionDTO): void {
               ></textarea>
             </div>
             <div class="tipos-publicacion" role="group" aria-label="Tipo de publicación">
-              <button
-                :class="['tipo-publicacion', { 'tipo-publicacion-activo': tipoPublicacion === 'texto' }]"
-                type="button"
-                :aria-pressed="tipoPublicacion === 'texto'"
-                @click="tipoPublicacion = 'texto'"
-              >
-                <i class="bi bi-chat-square-text" aria-hidden="true"></i>
-                Pensamiento
-              </button>
-              <button
-                :class="['tipo-publicacion', { 'tipo-publicacion-activo': tipoPublicacion === 'entrenamiento' }]"
-                type="button"
-                :aria-pressed="tipoPublicacion === 'entrenamiento'"
-                @click="tipoPublicacion = 'entrenamiento'"
-              >
-                <i class="bi bi-activity" aria-hidden="true"></i>
-                Entrenamiento
-              </button>
-              <button
-                :class="['tipo-publicacion', { 'tipo-publicacion-activo': tipoPublicacion === 'reto' }]"
-                type="button"
-                :aria-pressed="tipoPublicacion === 'reto'"
-                @click="tipoPublicacion = 'reto'"
-              >
-                <i class="bi bi-trophy" aria-hidden="true"></i>
-                Reto cumplido
-              </button>
+              
+             
+              
             </div>
             <label
               v-if="tipoPublicacion !== 'texto'"
-              class="sr-only"
+              class="solo-lectores"
               for="detalle-publicacion"
             >
               {{ tipoPublicacion === 'reto' ? 'Reto cumplido' : 'Resumen del entrenamiento' }}
@@ -230,10 +195,6 @@ function agregarComentario(publicacion: PublicacionDTO): void {
                 : '¿Qué entrenaste y cuánto tiempo? Ej.: Torso · 45 min'"
             />
             <div class="pie-compositor">
-              <span class="ayuda-compositor">
-                <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
-                Comparte un entrenamiento, reto o progreso
-              </span>
               <button
                 class="boton-publicar"
                 type="button"
@@ -246,7 +207,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
             </div>
           </section>
 
-          <div class="feed-separador">
+          <div class="separador-feed">
             <h2>Últimas publicaciones</h2>
             <span>{{ publicaciones.length }} publicaciones</span>
           </div>
@@ -329,8 +290,8 @@ function agregarComentario(publicacion: PublicacionDTO): void {
                   <p>{{ comentario.texto }}</p>
                 </div>
               </div>
-              <form class="form-comentario" @submit.prevent="agregarComentario(publicacion)">
-                <label class="sr-only" :for="`comentario-${publicacion.id}`">
+              <form class="formulario-comentario" @submit.prevent="agregarComentario(publicacion)">
+                <label class="solo-lectores" :for="`comentario-${publicacion.id}`">
                   Escribe un comentario
                 </label>
                 <input
@@ -395,7 +356,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   min-width: 0;
 }
 
-.dashboard-page {
+.pagina-panel {
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -403,7 +364,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   background: #0c0c0e;
 }
 
-.feed-container {
+.contenedor-feed {
   display: grid;
   grid-template-columns: minmax(0, 680px) minmax(220px, 280px);
   justify-content: center;
@@ -416,59 +377,18 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   box-sizing: border-box;
 }
 
-.feed-columna {
+.columna-feed {
   display: flex;
   min-width: 0;
   flex-direction: column;
   gap: 18px;
 }
 
-.feed-encabezado {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 4px;
-}
-
-.feed-eyebrow,
 .lateral-etiqueta {
   color: #eab308;
   font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 1px;
-}
-
-.feed-encabezado h1 {
-  margin: 5px 0 4px;
-  font-size: clamp(1.7rem, 3vw, 2.15rem);
-  font-weight: 900;
-  letter-spacing: -0.6px;
-}
-
-.feed-encabezado p {
-  margin: 0;
-  color: #a1a1aa;
-  font-size: 0.96rem;
-}
-
-.comunidad-activa {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 13px;
-  border: 1px solid #222226;
-  border-radius: 999px;
-  background: #141417;
-  color: #a1a1aa;
-  font-size: 0.76rem;
-  font-weight: 600;
-}
-
-.comunidad-activa i {
-  color: #22c55e;
-  font-size: 0.48rem;
 }
 
 .tarjeta-feed,
@@ -526,13 +446,13 @@ function agregarComentario(publicacion: PublicacionDTO): void {
 
 .fila-compositor textarea::placeholder,
 .detalle-compositor::placeholder,
-.form-comentario input::placeholder {
+.formulario-comentario input::placeholder {
   color: #71717a;
 }
 
 .fila-compositor textarea:focus,
 .detalle-compositor:focus,
-.form-comentario input:focus {
+.formulario-comentario input:focus {
   border-color: #ff3b30;
   box-shadow: 0 0 0 3px rgb(255 59 48 / 10%);
 }
@@ -542,40 +462,6 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 0 54px;
-}
-
-.tipo-publicacion {
-  display: inline-flex;
-  min-height: 40px;
-  align-items: center;
-  gap: 7px;
-  padding: 0 13px;
-  border: 1px solid #2a2a2e;
-  border-radius: 999px;
-  background: #101012;
-  color: #a1a1aa;
-  font: inherit;
-  font-size: 0.76rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
-}
-
-.tipo-publicacion:hover {
-  border-color: #49494f;
-  color: #ffffff;
-}
-
-.tipo-publicacion-activo {
-  border-color: rgb(255 59 48 / 55%);
-  background: rgb(255 59 48 / 10%);
-  color: #ff6b63;
-}
-
-.tipo-publicacion-activo:has(.bi-trophy) {
-  border-color: rgb(234 179 8 / 55%);
-  background: rgb(234 179 8 / 10%);
-  color: #eab308;
 }
 
 .detalle-compositor {
@@ -596,23 +482,11 @@ function agregarComentario(publicacion: PublicacionDTO): void {
 .pie-compositor {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-top: 15px;
   padding-top: 13px;
   border-top: 1px solid #252529;
-}
-
-.ayuda-compositor {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: #a1a1aa;
-  font-size: 0.8rem;
-}
-
-.ayuda-compositor i {
-  color: #eab308;
 }
 
 .boton-publicar {
@@ -642,7 +516,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   cursor: not-allowed;
 }
 
-.feed-separador {
+.separador-feed {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -863,14 +737,14 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   overflow-wrap: anywhere;
 }
 
-.form-comentario {
+.formulario-comentario {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 3px;
 }
 
-.form-comentario input {
+.formulario-comentario input {
   width: 100%;
   min-width: 0;
   height: 42px;
@@ -884,7 +758,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   font-size: 0.82rem;
 }
 
-.form-comentario button {
+.formulario-comentario button {
   display: grid;
   width: 42px;
   height: 42px;
@@ -897,7 +771,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   cursor: pointer;
 }
 
-.form-comentario button:disabled {
+.formulario-comentario button:disabled {
   color: #52525b;
   cursor: not-allowed;
 }
@@ -958,7 +832,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
   font-weight: 700;
 }
 
-.sr-only {
+.solo-lectores {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -969,7 +843,7 @@ function agregarComentario(publicacion: PublicacionDTO): void {
 }
 
 @media (max-width: 1100px) {
-  .feed-container {
+  .contenedor-feed {
     grid-template-columns: minmax(0, 680px);
     max-width: 760px;
   }
@@ -990,28 +864,8 @@ function agregarComentario(publicacion: PublicacionDTO): void {
 }
 
 @media (max-width: 600px) {
-  .feed-container {
+  .contenedor-feed {
     padding: 24px 14px 40px;
-  }
-
-  .feed-encabezado {
-    align-items: flex-start;
-  }
-
-  .feed-encabezado p {
-    max-width: 270px;
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-
-  .comunidad-activa {
-    margin-top: 19px;
-    padding: 7px 8px;
-    font-size: 0;
-  }
-
-  .comunidad-activa i {
-    font-size: 0.55rem;
   }
 
   .compositor,
@@ -1028,22 +882,9 @@ function agregarComentario(publicacion: PublicacionDTO): void {
     margin-left: 0;
   }
 
-  .tipo-publicacion {
-    min-height: 38px;
-    gap: 5px;
-    padding: 0 10px;
-    font-size: 0.7rem;
-  }
-
   .detalle-compositor {
     width: 100%;
     margin-left: 0;
-  }
-
-  .ayuda-compositor {
-    max-width: 200px;
-    font-size: 0.72rem;
-    line-height: 1.4;
   }
 
   .boton-publicar {

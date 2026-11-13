@@ -14,6 +14,7 @@ export interface Usuario {
     nombre: string;
     email: string;
     rol?: string;
+    imagen_url?: string | null;
     xp_total: number;
     nivel_actual: number;
     tiene_rutina?: boolean;

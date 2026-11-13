@@ -1,98 +1,91 @@
 <template>
   <!-- Promo Banner -->
-  <Transition name="slide-down">
-    <div v-if="showBanner" class="promo-banner">
+  <Transition name="deslizar-abajo">
+    <div v-if="showBanner" class="banner-promocional">
       <span>🎉 ¡Promoción limitada! Regístrate hoy y obtén 30 días gratis + 200 XP de bienvenida</span>
-      <button class="banner-close" @click="showBanner = false">
+      <button class="cerrar-banner" @click="showBanner = false">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
   </Transition>
 
-  <div class="landing-wrapper">
+  <div class="envoltura-portada">
 
     <!-- ===== HERO ===== -->
-    <section class="hero-section">
-      <div class="hero-inner">
-        <div class="hero-badge">
-          <i class="bi bi-fire"></i> NUEVA PLATAFORMA 4.0 — FITCORE
+    <section class="seccion-portada">
+      <div class="interior-portada">
+        <h1 class="titulo-portada">Convierte tu cuerpo en<br />tu mayor logro</h1>
+        <div class="botones-portada">
+          <button class="boton-primario" @click="router.push('/registro')">Comenzar gratis</button>
+          <button class="boton-borde" @click="router.push('/login')">Iniciar sesión</button>
         </div>
-        <h1 class="hero-title">Convierte tu cuerpo en<br />tu mayor logro</h1>
-        <p class="hero-subtitle">
-          Entrenamiento con estructura, niveles de experiencia y analytics en tiempo real.<br />
-          Tu evolución empieza hoy.
-        </p>
-        <div class="hero-buttons">
-          <button class="btn-primary" @click="router.push('/registro')">Comenzar gratis</button>
-          <button class="btn-outline" @click="router.push('/login')">Iniciar sesión</button>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">+12.000</span>
-            <span class="stat-label">Atletas</span>
+        <div class="estadisticas-portada">
+          <div class="elemento-estadistica">
+            <span class="numero-estadistica">+12.000</span>
+            <span class="etiqueta-estadistica">Atletas</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">98%</span>
-            <span class="stat-label">Retención</span>
+          <div class="separador-estadistica"></div>
+          <div class="elemento-estadistica">
+            <span class="numero-estadistica">98%</span>
+            <span class="etiqueta-estadistica">Retención</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">10</span>
-            <span class="stat-label">Niveles XP</span>
+          <div class="separador-estadistica"></div>
+          <div class="elemento-estadistica">
+            <span class="numero-estadistica">10</span>
+            <span class="etiqueta-estadistica">Niveles XP</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===== FEATURES ===== -->
-    <section class="features-section">
-      <div class="section-header">
-        <h2 class="section-title">Todo lo que necesitás para <span class="red">rendir al máximo</span></h2>
-        <p class="section-subtitle">Una plataforma completa diseñada para atletas que buscan resultados reales.</p>
+    <section class="seccion-caracteristicas">
+      <div class="encabezado-seccion">
+        <h2 class="titulo-seccion">Todo lo que necesitás para <span class="rojo">rendir al máximo</span></h2>
+        <p class="subtitulo-seccion">Una plataforma completa diseñada para atletas que buscan resultados reales.</p>
       </div>
-      <div class="features-grid">
-        <div v-for="feature in features" :key="feature.icon" class="feature-card">
-          <div class="feature-icon">
+      <div class="grilla-caracteristicas">
+        <div v-for="feature in features" :key="feature.icon" class="tarjeta-caracteristica">
+          <div class="icono-caracteristica">
             <i :class="`bi ${feature.icon}`"></i>
           </div>
-          <h3 class="feature-title">{{ feature.title }}</h3>
-          <p class="feature-desc">{{ feature.desc }}</p>
+          <h3 class="titulo-caracteristica">{{ feature.title }}</h3>
+          <p class="descripcion-caracteristica">{{ feature.desc }}</p>
         </div>
       </div>
     </section>
 
     <!-- ===== STATS ANIMADAS ===== -->
-    <section class="stats-section">
-      <div class="section-header">
-        <h2 class="section-title">Números que <span class="red">hablan por sí solos</span></h2>
+    <section class="seccion-estadisticas">
+      <div class="encabezado-seccion">
+        <h2 class="titulo-seccion">Números que <span class="rojo">hablan por sí solos</span></h2>
       </div>
-      <div class="animated-stats-grid">
-        <div v-for="stat in animatedStats" :key="stat.label" class="anim-stat-card">
-          <span class="anim-stat-number">{{ stat.display }}</span>
-          <span class="anim-stat-label">{{ stat.label }}</span>
+      <div class="grilla-estadisticas-animadas">
+        <div v-for="stat in animatedStats" :key="stat.label" class="tarjeta-estadistica-animada">
+          <span class="numero-estadistica-animada">{{ stat.display }}</span>
+          <span class="etiqueta-estadistica-animada">{{ stat.label }}</span>
         </div>
       </div>
     </section>
 
     <!-- ===== PRICING ===== -->
-    <section class="pricing-section">
-      <div class="section-header">
-        <h2 class="section-title">Elegí tu <span class="red">plan</span></h2>
-        <p class="section-subtitle">Sin compromisos. Empezá gratis y escalá cuando estés listo.</p>
+    <section class="seccion-precios">
+      <div class="encabezado-seccion">
+        <h2 class="titulo-seccion">Elegí tu <span class="rojo">plan</span></h2>
+        <p class="subtitulo-seccion">Sin compromisos. Empezá gratis y escalá cuando estés listo.</p>
       </div>
-      <div class="pricing-grid">
-        <div v-for="plan in plans" :key="plan.name" class="pricing-card" :class="{ popular: plan.popular }">
-          <div v-if="plan.popular" class="popular-badge">MÁS POPULAR</div>
-          <div class="plan-name">{{ plan.name }}</div>
-          <div class="plan-price">{{ plan.price }}</div>
-          <div class="plan-period">{{ plan.period }}</div>
-          <ul class="plan-features">
+      <div class="grilla-precios">
+        <div v-for="plan in plans" :key="plan.name" class="tarjeta-precio" :class="{ popular: plan.popular }">
+          <div v-if="plan.popular" class="insignia-popular">MÁS POPULAR</div>
+          <div class="nombre-plan">{{ plan.name }}</div>
+          <div class="precio-plan">{{ plan.price }}</div>
+          <div class="periodo-plan">{{ plan.period }}</div>
+          <ul class="caracteristicas-plan">
             <li v-for="f in plan.features" :key="f">
               <i class="bi bi-check-circle-fill"></i> {{ f }}
             </li>
           </ul>
-          <button class="btn-primary plan-btn" @click="router.push('/registro')">
+          <button class="boton-primario boton-plan" @click="router.push('/registro')">
             {{ plan.popular ? 'Comenzar ahora' : 'Elegir plan' }}
           </button>
         </div>
@@ -100,64 +93,64 @@
     </section>
 
     <!-- ===== TESTIMONIOS ===== -->
-    <section class="testimonials-section">
-      <div class="section-header">
-        <h2 class="section-title">Lo que dicen nuestros <span class="red">atletas</span></h2>
+    <section class="seccion-testimonios">
+      <div class="encabezado-seccion">
+        <h2 class="titulo-seccion">Lo que dicen nuestros <span class="rojo">atletas</span></h2>
       </div>
-      <div class="testimonial-slider">
-        <button class="slider-arrow left" @click="prevTestimonial">
+      <div class="deslizador-testimonios">
+        <button class="flecha-deslizador izquierda" @click="prevTestimonial">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <div v-if="currentTestimonial" class="testimonial-card">
-          <div class="testimonial-avatar">{{ currentTestimonial.initials }}</div>
-          <p class="testimonial-text">"{{ currentTestimonial.text }}"</p>
-          <div class="testimonial-author">{{ currentTestimonial.name }}</div>
-          <div class="testimonial-rank">{{ currentTestimonial.rank }}</div>
+        <div v-if="currentTestimonial" class="tarjeta-testimonio">
+          <div class="avatar-testimonio">{{ currentTestimonial.initials }}</div>
+          <p class="texto-testimonio">"{{ currentTestimonial.text }}"</p>
+          <div class="autor-testimonio">{{ currentTestimonial.name }}</div>
+          <div class="rango-testimonio">{{ currentTestimonial.rank }}</div>
         </div>
-        <button class="slider-arrow right" @click="nextTestimonial">
+        <button class="flecha-deslizador derecha" @click="nextTestimonial">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
-      <div class="slider-dots">
+      <div class="puntos-deslizador">
         <span
           v-for="(_, idx) in testimonials"
           :key="idx"
-          class="dot"
-          :class="{ active: idx === testimonialIndex }"
+          class="punto"
+          :class="{ activo: idx === testimonialIndex }"
           @click="testimonialIndex = idx"
         ></span>
       </div>
     </section>
 
     <!-- ===== CTA FINAL ===== -->
-    <section class="cta-section">
-      <h2 class="cta-title">¿Listo para transformarte?</h2>
-      <p class="cta-subtitle">Únete a más de 12.000 atletas que ya están construyendo su mejor versión.</p>
-      <button class="btn-primary btn-large" @click="router.push('/registro')">
+    <section class="seccion-cta">
+      <h2 class="titulo-cta">¿Listo para transformarte?</h2>
+      <p class="subtitulo-cta">Únete a más de 12.000 atletas que ya están construyendo su mejor versión.</p>
+      <button class="boton-primario boton-grande" @click="router.push('/registro')">
         Crear mi cuenta gratis
       </button>
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <span class="footer-logo">FIT<span class="red">CORE</span></span>
-          <p class="footer-slogan">Tu rendimiento. Tu legado.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+    <footer class="pie-sitio">
+      <div class="interior-pie">
+        <div class="marca-pie">
+          <span class="logo-pie">FIT<span class="rojo">CORE</span></span>
+          <p class="eslogan-pie">Tu rendimiento. Tu legado.</p>
+          <div class="redes-pie">
+            <a href="#" class="icono-social"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="icono-social"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="icono-social"><i class="bi bi-youtube"></i></a>
           </div>
         </div>
-        <div class="footer-links">
+        <div class="enlaces-pie">
           <a href="#">Inicio</a>
           <a href="#" @click.prevent="router.push('/login')">Login</a>
           <a href="#" @click.prevent="router.push('/registro')">Registro</a>
           <a href="#">Rutinas</a>
         </div>
       </div>
-      <div class="footer-copy">© 2026 FitCore. Todos los derechos reservados.</div>
+      <div class="copia-pie">© 2026 FitCore. Todos los derechos reservados.</div>
     </footer>
 
   </div>
@@ -321,36 +314,36 @@ function prevTestimonial() {
   padding: 0;
 }
 
-.landing-wrapper {
+.envoltura-portada {
   font-family: 'Rubik', sans-serif;
   background-color: #0c0c0e;
   color: #fff;
   overflow-x: hidden;
 }
 
-.red { color: #ff3b30; }
+.rojo { color: #ff3b30; }
 
-.section-header {
+.encabezado-seccion {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.section-title {
+.titulo-seccion {
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 
-.section-subtitle {
+.subtitulo-seccion {
   color: #71717a;
   font-size: 1.05rem;
   max-width: 560px;
   margin: 0 auto;
 }
 
-/* ── Buttons ─────────────────────────────────────────────────────────────── */
-.btn-primary {
+/* ── Botones ─────────────────────────────────────────────────────────────── */
+.boton-primario {
   background: #ff3b30;
   color: #fff;
   border: none;
@@ -362,13 +355,13 @@ function prevTestimonial() {
   cursor: pointer;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
-.btn-primary:hover {
+.boton-primario:hover {
   background: #e6342a;
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(255, 59, 48, 0.35);
 }
 
-.btn-outline {
+.boton-borde {
   background: transparent;
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.55);
@@ -380,13 +373,13 @@ function prevTestimonial() {
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
 }
-.btn-outline:hover {
+.boton-borde:hover {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
 }
 
-.btn-large {
+.boton-grande {
   padding: 1.1rem 2.8rem;
   font-size: 1.15rem;
   border-radius: 12px;
@@ -395,7 +388,7 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    PROMO BANNER
 ══════════════════════════════════════════════════════════════════════════════ */
-.promo-banner {
+.banner-promocional {
   position: fixed;
   top: 0;
   left: 0;
@@ -414,7 +407,7 @@ function prevTestimonial() {
   backdrop-filter: blur(8px);
 }
 
-.banner-close {
+.cerrar-banner {
   background: transparent;
   border: none;
   color: #fff;
@@ -425,15 +418,15 @@ function prevTestimonial() {
   margin-left: 0.5rem;
   line-height: 1;
 }
-.banner-close:hover { opacity: 1; }
+.cerrar-banner:hover { opacity: 1; }
 
 /* Slide-down transition */
-.slide-down-enter-active,
-.slide-down-leave-active {
+.deslizar-abajo-enter-active,
+.deslizar-abajo-leave-active {
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
-.slide-down-enter-from,
-.slide-down-leave-to {
+.deslizar-abajo-enter-from,
+.deslizar-abajo-leave-to {
   transform: translateY(-100%);
   opacity: 0;
 }
@@ -441,7 +434,7 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════════════════════════════ */
-.hero-section {
+.seccion-portada {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -453,29 +446,14 @@ function prevTestimonial() {
   text-align: center;
 }
 
-.hero-inner {
+.interior-portada {
   max-width: 780px;
-  animation: fadeInUp 0.8s ease both;
+  animation: aparecerArriba 0.8s ease both;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: rgba(255, 59, 48, 0.12);
-  border: 1px solid rgba(255, 59, 48, 0.35);
-  color: #ff3b30;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  margin-bottom: 2rem;
-  animation: pulse 2.5s ease-in-out infinite;
-}
 
-.hero-title {
+
+.titulo-portada {
   font-size: 4.5rem;
   font-weight: 800;
   line-height: 1.08;
@@ -483,15 +461,8 @@ function prevTestimonial() {
   margin-bottom: 1.5rem;
 }
 
-.hero-subtitle {
-  font-size: 1.15rem;
-  color: #71717a;
-  line-height: 1.7;
-  max-width: 620px;
-  margin: 0 auto 2.5rem;
-}
 
-.hero-buttons {
+.botones-portada {
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -499,7 +470,7 @@ function prevTestimonial() {
   margin-bottom: 3.5rem;
 }
 
-.hero-stats {
+.estadisticas-portada {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -507,26 +478,26 @@ function prevTestimonial() {
   flex-wrap: wrap;
 }
 
-.stat-item {
+.elemento-estadistica {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.stat-number {
+.numero-estadistica {
   font-size: 1.6rem;
   font-weight: 800;
   color: #fff;
 }
 
-.stat-label {
+.etiqueta-estadistica {
   font-size: 0.8rem;
   color: #71717a;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.stat-divider {
+.separador-estadistica {
   width: 1px;
   height: 36px;
   background: #27272a;
@@ -535,20 +506,20 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    FEATURES
 ══════════════════════════════════════════════════════════════════════════════ */
-.features-section {
+.seccion-caracteristicas {
   padding: 5rem 1.5rem;
   background: #0c0c0e;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.features-grid {
+.grilla-caracteristicas {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-.feature-card {
+.tarjeta-caracteristica {
   background: #18181b;
   border: 1px solid #27272a;
   border-radius: 16px;
@@ -556,25 +527,25 @@ function prevTestimonial() {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.feature-card:hover {
+.tarjeta-caracteristica:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   border-color: rgba(255, 59, 48, 0.4);
 }
 
-.feature-icon {
+.icono-caracteristica {
   font-size: 2rem;
   color: #ff3b30;
   margin-bottom: 1rem;
 }
 
-.feature-title {
+.titulo-caracteristica {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
-.feature-desc {
+.descripcion-caracteristica {
   font-size: 0.9rem;
   color: #71717a;
   line-height: 1.6;
@@ -583,12 +554,12 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    ANIMATED STATS
 ══════════════════════════════════════════════════════════════════════════════ */
-.stats-section {
+.seccion-estadisticas {
   background: #111113;
   padding: 5rem 1.5rem;
 }
 
-.animated-stats-grid {
+.grilla-estadisticas-animadas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
@@ -596,7 +567,7 @@ function prevTestimonial() {
   margin: 0 auto;
 }
 
-.anim-stat-card {
+.tarjeta-estadistica-animada {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -609,18 +580,18 @@ function prevTestimonial() {
   transition: transform 0.25s, box-shadow 0.25s;
 }
 
-.anim-stat-card:hover {
+.tarjeta-estadistica-animada:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-.anim-stat-number {
+.numero-estadistica-animada {
   font-size: 2.2rem;
   font-weight: 800;
   color: #ff3b30;
 }
 
-.anim-stat-label {
+.etiqueta-estadistica-animada {
   font-size: 0.82rem;
   color: #71717a;
   text-align: center;
@@ -629,21 +600,21 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    PRICING
 ══════════════════════════════════════════════════════════════════════════════ */
-.pricing-section {
+.seccion-precios {
   padding: 5rem 1.5rem;
   background: #0c0c0e;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-.pricing-grid {
+.grilla-precios {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
 
-.pricing-card {
+.tarjeta-precio {
   background: #18181b;
   border: 1px solid #27272a;
   border-radius: 18px;
@@ -655,18 +626,18 @@ function prevTestimonial() {
   gap: 0.75rem;
 }
 
-.pricing-card:hover {
+.tarjeta-precio:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
-.pricing-card.popular {
+.tarjeta-precio.popular {
   border: 2px solid #ff3b30;
   background: #1a0f0e;
   box-shadow: 0 0 40px rgba(255, 59, 48, 0.15);
 }
 
-.popular-badge {
+.insignia-popular {
   position: absolute;
   top: -14px;
   left: 50%;
@@ -681,25 +652,25 @@ function prevTestimonial() {
   white-space: nowrap;
 }
 
-.plan-name {
+.nombre-plan {
   font-size: 1.05rem;
   font-weight: 700;
   color: #fff;
 }
 
-.plan-price {
+.precio-plan {
   font-size: 1.9rem;
   font-weight: 800;
   color: #ff3b30;
 }
 
-.plan-period {
+.periodo-plan {
   font-size: 0.85rem;
   color: #71717a;
   margin-top: -0.5rem;
 }
 
-.plan-features {
+.caracteristicas-plan {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -707,7 +678,7 @@ function prevTestimonial() {
   margin: 0.5rem 0 1rem;
 }
 
-.plan-features li {
+.caracteristicas-plan li {
   font-size: 0.88rem;
   color: #a1a1aa;
   display: flex;
@@ -715,12 +686,12 @@ function prevTestimonial() {
   gap: 0.4rem;
 }
 
-.plan-features li .bi {
+.caracteristicas-plan li .bi {
   color: #ff3b30;
   font-size: 0.85rem;
 }
 
-.plan-btn {
+.boton-plan {
   width: 100%;
   margin-top: auto;
 }
@@ -728,12 +699,12 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    TESTIMONIALS
 ══════════════════════════════════════════════════════════════════════════════ */
-.testimonials-section {
+.seccion-testimonios {
   background: #111113;
   padding: 5rem 1.5rem;
 }
 
-.testimonial-slider {
+.deslizador-testimonios {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -742,7 +713,7 @@ function prevTestimonial() {
   margin: 0 auto 1.5rem;
 }
 
-.testimonial-card {
+.tarjeta-testimonio {
   background: #18181b;
   border: 1px solid #27272a;
   border-radius: 18px;
@@ -756,7 +727,7 @@ function prevTestimonial() {
   gap: 0.75rem;
 }
 
-.testimonial-avatar {
+.avatar-testimonio {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -769,25 +740,25 @@ function prevTestimonial() {
   color: #fff;
 }
 
-.testimonial-text {
+.texto-testimonio {
   font-size: 0.97rem;
   color: #a1a1aa;
   line-height: 1.7;
   font-style: italic;
 }
 
-.testimonial-author {
+.autor-testimonio {
   font-weight: 700;
   font-size: 0.95rem;
 }
 
-.testimonial-rank {
+.rango-testimonio {
   font-size: 0.8rem;
   color: #ff3b30;
   font-weight: 600;
 }
 
-.slider-arrow {
+.flecha-deslizador {
   background: #18181b;
   border: 1px solid #27272a;
   color: #fff;
@@ -802,18 +773,18 @@ function prevTestimonial() {
   flex-shrink: 0;
   transition: background 0.2s, border-color 0.2s;
 }
-.slider-arrow:hover {
+.flecha-deslizador:hover {
   background: #27272a;
   border-color: #ff3b30;
 }
 
-.slider-dots {
+.puntos-deslizador {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
 }
 
-.dot {
+.punto {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -821,7 +792,7 @@ function prevTestimonial() {
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
-.dot.active {
+.punto.activo {
   background: #ff3b30;
   transform: scale(1.3);
 }
@@ -829,7 +800,7 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    CTA FINAL
 ══════════════════════════════════════════════════════════════════════════════ */
-.cta-section {
+.seccion-cta {
   padding: 6rem 1.5rem;
   text-align: center;
   background:
@@ -837,13 +808,13 @@ function prevTestimonial() {
     linear-gradient(180deg, #1a0808 0%, #0c0c0e 100%);
 }
 
-.cta-title {
+.titulo-cta {
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
 
-.cta-subtitle {
+.subtitulo-cta {
   color: #71717a;
   font-size: 1.05rem;
   margin-bottom: 2.5rem;
@@ -855,13 +826,13 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    FOOTER
 ══════════════════════════════════════════════════════════════════════════════ */
-.site-footer {
+.pie-sitio {
   background: #0c0c0e;
   border-top: 1px solid #18181b;
   padding: 3rem 1.5rem 1.5rem;
 }
 
-.footer-inner {
+.interior-pie {
   max-width: 900px;
   margin: 0 auto;
   display: flex;
@@ -872,47 +843,47 @@ function prevTestimonial() {
   margin-bottom: 2rem;
 }
 
-.footer-logo {
+.logo-pie {
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 0.04em;
 }
 
-.footer-slogan {
+.eslogan-pie {
   color: #71717a;
   font-size: 0.85rem;
   margin-top: 0.35rem;
   margin-bottom: 1rem;
 }
 
-.footer-socials {
+.redes-pie {
   display: flex;
   gap: 0.75rem;
 }
 
-.social-icon {
+.icono-social {
   color: #71717a;
   font-size: 1.2rem;
   text-decoration: none;
   transition: color 0.2s;
 }
-.social-icon:hover { color: #ff3b30; }
+.icono-social:hover { color: #ff3b30; }
 
-.footer-links {
+.enlaces-pie {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-.footer-links a {
+.enlaces-pie a {
   color: #71717a;
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s;
 }
-.footer-links a:hover { color: #fff; }
+.enlaces-pie a:hover { color: #fff; }
 
-.footer-copy {
+.copia-pie {
   text-align: center;
   color: #3f3f46;
   font-size: 0.8rem;
@@ -923,12 +894,12 @@ function prevTestimonial() {
 /* ══════════════════════════════════════════════════════════════════════════════
    ANIMATIONS
 ══════════════════════════════════════════════════════════════════════════════ */
-@keyframes fadeInUp {
+@keyframes aparecerArriba {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse {
+@keyframes pulso {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.25); }
   50%       { box-shadow: 0 0 0 8px rgba(255, 59, 48, 0); }
 }
@@ -937,48 +908,48 @@ function prevTestimonial() {
    RESPONSIVE
 ══════════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .hero-title {
+  .titulo-portada {
     font-size: 2.6rem;
   }
 
-  .features-grid {
+  .grilla-caracteristicas {
     grid-template-columns: 1fr;
   }
 
-  .animated-stats-grid {
+  .grilla-estadisticas-animadas {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .pricing-grid {
+  .grilla-precios {
     grid-template-columns: 1fr;
   }
 
-  .testimonial-slider {
+  .deslizador-testimonios {
     gap: 0.75rem;
   }
 
-  .footer-inner {
+  .interior-pie {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  .footer-links {
+  .enlaces-pie {
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
 
-  .hero-stats {
+  .estadisticas-portada {
     gap: 1rem;
   }
 
-  .stat-divider {
+  .separador-estadistica {
     display: none;
   }
 
-  .cta-title {
+  .titulo-cta {
     font-size: 2rem;
   }
 }

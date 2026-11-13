@@ -82,29 +82,28 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   <main class="pag-entrenamiento">
 
     <!-- ── ENCABEZADO ───────────────────────────────────────────────── -->
-    <header class="enc-header">
+    <header class="enc-cabecera">
       <div>
-        <span class="eyebrow">TU PLAN SEMANAL</span>
         <h1 class="titulo-pag">Entrenamientos<span class="punto">.</span></h1>
         <p class="subtitulo">Completá tus sesiones · {{ categoriaRutina }}</p>
       </div>
 
-      <div class="badge-nivel">
-        <span class="badge-dot"></span>
+      <div class="insignia-nivel">
+        <span class="insignia-punto"></span>
         NIVEL {{ nivelUsuario }}
       </div>
     </header>
 
     <!-- ── PROGRESO XP SEMANAL ──────────────────────────────────────── -->
     <section class="bloque-progreso">
-      <div class="progreso-info">
+      <div class="progreso-informacion">
         <div>
-          <span class="eyebrow">PROGRESO SEMANAL · SEMANA {{ semanaActual }}</span>
+          <span class="sobretitulo">PROGRESO SEMANAL · SEMANA {{ semanaActual }}</span>
           <p class="progreso-texto">
             <strong>{{ xpSemanaGanado }}</strong> / {{ objetivoXpSemanal }} XP
           </p>
         </div>
-        <span class="progreso-pct">{{ progresoSemana }}%</span>
+        <span class="progreso-porcentaje">{{ progresoSemana }}%</span>
       </div>
       <div class="barra-semanal">
         <div class="barra-relleno" :style="{ width: `${progresoSemana}%` }"></div>
@@ -113,7 +112,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
         <span
           v-for="s in 4"
           :key="s"
-          class="dot-semana"
+          class="punto-semana"
           :class="{
             activa: s === semanaActual,
             completada: s < semanaActual || (s === semanaActual && rutina.rutinaCreada?.estado_semana === 'completada')
@@ -141,7 +140,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 
         <div class="ses-cabecera">
           <div>
-            <span class="eyebrow">TUS DÍAS DE ENTRENAMIENTO</span>
+            <span class="sobretitulo">TUS DÍAS DE ENTRENAMIENTO</span>
             <h2>Sesiones de la semana</h2>
           </div>
           <span class="ses-contador">
@@ -165,10 +164,10 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 
             <!-- Estado pill -->
             <div
-              class="pill-estado"
+              class="pildora-estado"
               :class="{
-                'pill-ok':  ses.completado,
-                'pill-lock': ses.bloqueado
+                'pildora-completada': ses.completado,
+                'pildora-bloqueada':  ses.bloqueado
               }"
             >
               <i
@@ -186,8 +185,8 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
             </div>
 
             <!-- Info -->
-            <div class="tarjeta-info">
-              <p class="dia-label">DÍA {{ ses.numero }}</p>
+            <div class="tarjeta-informacion">
+              <p class="dia-etiqueta">DÍA {{ ses.numero }}</p>
               <h3 class="dia-nombre">{{ ses.diaNombre }}</h3>
               <p class="dia-detalle">
                 {{ ejercicios.length }} ejercicio{{ ejercicios.length !== 1 ? 's' : '' }}
@@ -196,7 +195,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 
             <!-- Pie: XP + botón -->
             <div class="tarjeta-pie">
-              <span class="xp-badge">
+              <span class="xp-insignia">
                 <i class="bi bi-lightning-charge-fill"></i>
                 {{ xpPorSesion }} XP
               </span>
@@ -218,7 +217,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
       <!-- ── EJERCICIOS DEL DÍA (preview) ─────────────────────────── -->
       <section class="seccion-ejercicios" v-if="ejercicios.length > 0">
         <div class="ej-cabecera">
-          <span class="eyebrow">EJERCICIOS DE CADA SESIÓN</span>
+          <span class="sobretitulo">EJERCICIOS DE CADA SESIÓN</span>
           <h2>Tu rutina</h2>
         </div>
 
@@ -229,7 +228,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
             class="fila-ejercicio"
           >
             <span class="ej-num">{{ String(i + 1).padStart(2, '0') }}</span>
-            <div class="ej-info">
+            <div>
               <span class="ej-nombre">{{ ej.nombre }}</span>
               <span class="ej-detalle">
                 {{ ej.series_objetivo }} series × {{ ej.reps_objetivo }} reps
@@ -244,19 +243,19 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 
         <!-- Resumen XP -->
         <div class="resumen-xp">
-          <div class="resumen-item">
+          <div class="resumen-elemento">
             <span class="res-valor">{{ xpPorSesion }}</span>
-            <span class="res-label">XP por sesión</span>
+            <span class="res-etiqueta">XP por sesión</span>
           </div>
-          <div class="resumen-sep"></div>
-          <div class="resumen-item">
+          <div class="resumen-separador"></div>
+          <div class="resumen-elemento">
             <span class="res-valor">{{ objetivoXpSemanal }}</span>
-            <span class="res-label">XP si completás la semana</span>
+            <span class="res-etiqueta">XP si completás la semana</span>
           </div>
-          <div class="resumen-sep"></div>
-          <div class="resumen-item">
+          <div class="resumen-separador"></div>
+          <div class="resumen-elemento">
             <span class="res-valor">250</span>
-            <span class="res-label">XP objetivo semanal</span>
+            <span class="res-etiqueta">XP objetivo semanal</span>
           </div>
         </div>
       </section>
@@ -267,17 +266,6 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 </template>
 
 <style scoped>
-/* ─── Variables ───────────────────────────────────────────────────────── */
-:root {
-  --rojo:   #ff3b30;
-  --dorado: #eab308;
-  --verde:  #22c55e;
-  --gris:   #52525b;
-  --fondo:  #0c0c0e;
-  --card:   #141417;
-  --borde:  #222226;
-}
-
 /* ─── Layout ──────────────────────────────────────────────────────────── */
 .pag-entrenamiento {
   padding: 36px 32px 60px;
@@ -287,7 +275,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 }
 
 /* ─── Tipografía base ─────────────────────────────────────────────────── */
-.eyebrow {
+.sobretitulo {
   font-size: 11px;
   font-weight: 700;
   color: #ff3b30;
@@ -298,7 +286,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 .punto { color: #ff3b30; }
 
 /* ─── Encabezado ──────────────────────────────────────────────────────── */
-.enc-header {
+.enc-cabecera {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -315,7 +303,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   font-size: 14px;
   margin: 0;
 }
-.badge-nivel {
+.insignia-nivel {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -328,7 +316,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   border-radius: 999px;
   white-space: nowrap;
 }
-.badge-dot {
+.insignia-punto {
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -343,7 +331,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   padding: 24px;
   margin-bottom: 36px;
 }
-.progreso-info {
+.progreso-informacion {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -359,7 +347,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   font-size: 28px;
   font-weight: 800;
 }
-.progreso-pct {
+.progreso-porcentaje {
   font-size: 24px;
   font-weight: 800;
   color: #ff3b30;
@@ -381,7 +369,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   gap: 8px;
   margin-top: 14px;
 }
-.dot-semana {
+.punto-semana {
   font-size: 11px;
   font-weight: 700;
   color: #52525b;
@@ -390,12 +378,12 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   border-radius: 999px;
   border: 1px solid #222226;
 }
-.dot-semana.activa {
+.punto-semana.activa {
   color: #ff3b30;
   border-color: rgba(255, 59, 48, .4);
   background: rgba(255, 59, 48, .08);
 }
-.dot-semana.completada {
+.punto-semana.completada {
   color: #22c55e;
   border-color: rgba(34, 197, 94, .35);
 }
@@ -500,7 +488,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 }
 
 /* Pill de estado */
-.pill-estado {
+.pildora-estado {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -513,12 +501,12 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   padding: 5px 10px;
   width: fit-content;
 }
-.pill-ok   { color: #22c55e; background: rgba(34, 197, 94, .1); }
-.pill-lock { color: #52525b; background: rgba(82, 82, 91, .15); }
+.pildora-completada { color: #22c55e; background: rgba(34, 197, 94, .1); }
+.pildora-bloqueada  { color: #52525b; background: rgba(82, 82, 91, .15); }
 
 /* Info del día */
-.tarjeta-info { flex: 1; }
-.dia-label {
+.tarjeta-informacion { flex: 1; }
+.dia-etiqueta {
   font-size: 11px;
   font-weight: 700;
   color: #52525b;
@@ -542,7 +530,7 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   justify-content: space-between;
   align-items: center;
 }
-.xp-badge {
+.xp-insignia {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -647,20 +635,20 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
   border-radius: 0 0 18px 18px;
   padding: 20px 24px;
 }
-.resumen-item { flex: 1; text-align: center; }
+.resumen-elemento { flex: 1; text-align: center; }
 .res-valor {
   display: block;
   font-size: 24px;
   font-weight: 900;
   color: #eab308;
 }
-.res-label {
+.res-etiqueta {
   display: block;
   font-size: 11px;
   color: #71717a;
   margin-top: 2px;
 }
-.resumen-sep {
+.resumen-separador {
   width: 1px;
   height: 36px;
   background: rgba(234, 179, 8, .2);
@@ -669,9 +657,9 @@ function irASesion(sesion: { id: number; numero: number; bloqueado: boolean }) {
 /* ─── Responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .pag-entrenamiento  { padding: 24px 16px 48px; }
-  .enc-header         { flex-direction: column; gap: 16px; }
+  .enc-cabecera       { flex-direction: column; gap: 16px; }
   .grilla-sesiones    { grid-template-columns: 1fr; }
   .resumen-xp         { flex-direction: column; gap: 16px; }
-  .resumen-sep        { width: 100%; height: 1px; }
+  .resumen-separador  { width: 100%; height: 1px; }
 }
 </style>

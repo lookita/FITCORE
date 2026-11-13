@@ -3,16 +3,16 @@ defineProps<{ eyebrow: string; titulo: string; descripcion: string }>();
 </script>
 
 <template>
-  <div class="page-heading">
-    <p class="eyebrow">{{ eyebrow }}</p>
+  <div class="encabezado-pagina">
+    <p class="sobretitulo">{{ eyebrow }}</p>
     <h1>{{ titulo }}</h1>
-    <p class="description">{{ descripcion }}</p>
+    <p class="descripcion">{{ descripcion }}</p>
   </div>
 </template>
 
 <style scoped>
-.page-heading { max-width: 670px; }
-.eyebrow {
+.encabezado-pagina { max-width: 670px; }
+.sobretitulo {
   margin: 0 0 12px;
   color: var(--fit-accent);
   font-size: 10px;
@@ -26,7 +26,7 @@ h1 {
   line-height: 1.06;
   letter-spacing: -0.055em;
 }
-.description {
+.descripcion {
   margin: 14px 0 0;
   color: var(--fit-muted);
   font-size: 14px;

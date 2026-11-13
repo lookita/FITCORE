@@ -2,6 +2,7 @@
 import { useUsuarioVerificacion } from '@/stores/auth.store';
 import { useEntrenamientoStore } from '@/stores/entrenamiento.store';
 import {useRouter} from 'vue-router'
+import AvatarUsuario from '@/components/AvatarUsuario.vue';
 
 const path = useRouter();
 const auth = useUsuarioVerificacion();
@@ -9,33 +10,29 @@ const entrenoStore = useEntrenamientoStore();
 </script>
 
 <template>
-  <aside class="sidebar-volt">
+  <aside class="barra-lateral-volt">
     <!-- 1. Header con Logo FITCORE -->
-    <div class="sidebar-brand">
-      <div class="brand-badge">
-        <i class="bi bi-lightning-charge-fill"></i>
+    <div class="marca-barra-lateral">
+      <div class="insignia-marca">
+        <img src="../components/icons/logoV.jpg" alt="">
       </div>
       <router-link to="/" >
-        <span class="brand-name">FITCORE</span>
+        <span class="nombre-marca">FITCORE</span>
       </router-link>
     </div>
 
     <!-- 2. Tarjeta del Usuario Activo -->
-    <div class="user-card">
-      <div class="user-avatar-wrap">
-        <img
-          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80"
-          alt="Avatar Atleta"
-          class="user-avatar-img"
-        />
-        <span class="online-indicator"></span>
+    <div class="tarjeta-usuario">
+      <div class="envoltorio-avatar-usuario">
+        <AvatarUsuario :nombre="auth.nombre" :imagen-url="auth.usuario?.imagen_url" :tamano="42" />
+        <span class="indicador-en-linea"></span>
       </div>
-      <div class="user-meta">
+      <div class="meta-usuario">
         <router-link to="/perfil" >
-          <h3 class="user-display-name">{{ auth.nombre}}</h3>
+          <h3 class="nombre-visible-usuario">{{ auth.nombre}}</h3>
         </router-link>
       </div>
-      <div class="user-soundwave" title="Sesión activa">
+      <div class="onda-sonido-usuario" title="Sesión activa">
         <span></span>
         <span></span>
         <span></span>
@@ -43,46 +40,46 @@ const entrenoStore = useEntrenamientoStore();
     </div>
 
     <!-- 3. Sección Amigos Activos -->
-    <div class="sidebar-section">
-      <div class="section-title-row">
-        <span class="section-label">Amigos</span>
+    <div class="seccion-barra-lateral">
+      <div class="fila-titulo-seccion">
+        <span class="etiqueta-seccion">Amigos</span>
       </div>
-      <div class="friends-grid-volt">
-        <div v-for="amigo in entrenoStore.amigos" :key="amigo.id" class="friend-card">
-          <div class="friend-ring">
-            <img :src="amigo.foto" :alt="amigo.nombre" class="friend-photo" />
+      <div class="grilla-amigos-volt">
+        <div v-for="amigo in entrenoStore.amigos" :key="amigo.id" class="tarjeta-amigo">
+          <div class="anillo-amigo">
+            <img :src="amigo.foto" :alt="amigo.nombre" class="foto-amigo" />
           </div>
-          <span class="friend-nickname">{{ amigo.nombre }}</span>
+          <span class="apodo-amigo">{{ amigo.nombre }}</span>
         </div>
       </div>
     </div>
 
     <!-- 4. Sección Intereses -->
-    <div class="sidebar-section">
-      <div class="section-title-row">
-        <span class="section-label">Intereses</span>
+    <div class="seccion-barra-lateral">
+      <div class="fila-titulo-seccion">
+        <span class="etiqueta-seccion">Intereses</span>
       </div>
-      <ul class="interests-menu">
-        <li v-for="interes in entrenoStore.intereses" :key="interes.id" class="interest-item">
-          <div class="interest-icon-badge">
+      <ul class="menu-intereses">
+        <li v-for="interes in entrenoStore.intereses" :key="interes.id" class="elemento-interes">
+          <div class="insignia-icono-interes">
             <i :class="`bi ${interes.icono}`"></i>
           </div>
-          <span class="interest-name">{{ interes.nombre }}</span>
+          <span class="nombre-interes">{{ interes.nombre }}</span>
         </li>
       </ul>
     </div>
 
     <!-- 5. Widget Inferior: ESTA SEMANA -->
-    <div class="sidebar-footer-widget">
-      <span class="widget-eyebrow">ESTA SEMANA</span>
-      <div class="widget-metrics">
-        <div class="widget-metric-item">
-          <strong class="metric-num">{{ entrenoStore.entrenosSemanales }}</strong>
-          <small class="metric-lbl">entrenos</small>
+    <div class="widget-pie-barra-lateral">
+      <span class="sobretitulo-widget">ESTA SEMANA</span>
+      <div class="metricas-widget">
+        <div class="elemento-metrica-widget">
+          <strong class="numero-metrica">{{ entrenoStore.entrenosSemanales }}</strong>
+          <small class="etiqueta-metrica">entrenos</small>
         </div>
-        <div class="widget-metric-item">
-          <strong class="metric-num">{{ entrenoStore.minutosSemanales }}</strong>
-          <small class="metric-lbl">minutos</small>
+        <div class="elemento-metrica-widget">
+          <strong class="numero-metrica">{{ entrenoStore.minutosSemanales }}</strong>
+          <small class="etiqueta-metrica">minutos</small>
         </div>
       </div>
     </div>
@@ -90,7 +87,7 @@ const entrenoStore = useEntrenamientoStore();
 </template>
 
 <style scoped>
-.sidebar-volt {
+.barra-lateral-volt {
   width: 270px;
   min-width: 270px;
   background-color: #0c0c0e;
@@ -106,13 +103,13 @@ const entrenoStore = useEntrenamientoStore();
 }
 
 /* 1. Header Logo */
-.sidebar-brand {
+.marca-barra-lateral {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.brand-badge {
+.insignia-marca img {
   width: 32px;
   height: 32px;
   background-color: #ff3b30;
@@ -124,7 +121,7 @@ const entrenoStore = useEntrenamientoStore();
   font-size: 1rem;
 }
 
-.brand-name {
+.nombre-marca {
   font-weight: 900;
   letter-spacing: 1.5px;
   font-size: 1.15rem;
@@ -132,7 +129,7 @@ const entrenoStore = useEntrenamientoStore();
 }
 
 /* 2. User Card */
-.user-card {
+.tarjeta-usuario {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -142,22 +139,14 @@ const entrenoStore = useEntrenamientoStore();
   border-radius: 14px;
 }
 
-.user-avatar-wrap {
+.envoltorio-avatar-usuario {
   position: relative;
   width: 42px;
   height: 42px;
   flex-shrink: 0;
 }
 
-.user-avatar-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid #ff3b30;
-}
-
-.online-indicator {
+.indicador-en-linea {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -168,12 +157,12 @@ const entrenoStore = useEntrenamientoStore();
   border: 2px solid #141417;
 }
 
-.user-meta {
+.meta-usuario {
   flex: 1;
   min-width: 0;
 }
 
-.user-display-name {
+.nombre-visible-usuario {
   font-size: 0.88rem;
   font-weight: 700;
   margin: 0;
@@ -183,13 +172,7 @@ const entrenoStore = useEntrenamientoStore();
   text-overflow: ellipsis;
 }
 
-.user-streak-text {
-  font-size: 0.72rem;
-  color: #a1a1aa;
-  margin: 2px 0 0 0;
-}
-
-.user-soundwave {
+.onda-sonido-usuario {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -197,61 +180,51 @@ const entrenoStore = useEntrenamientoStore();
   padding-right: 4px;
 }
 
-.user-soundwave span {
+.onda-sonido-usuario span {
+  display: none;
   width: 2.5px;
   background-color: #71717a;
   border-radius: 2px;
-  animation: pulseWave 1.4s ease-in-out infinite;
+  animation: pulsoOnda 1.4s ease-in-out infinite;
 }
 
-.user-soundwave span:nth-child(1) { height: 8px; animation-delay: 0.1s; }
-.user-soundwave span:nth-child(2) { height: 16px; animation-delay: 0.3s; background-color: #ff3b30; }
-.user-soundwave span:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+.onda-sonido-usuario span:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.onda-sonido-usuario span:nth-child(2) { height: 16px; animation-delay: 0.3s; background-color: #ff3b30; }
+.onda-sonido-usuario span:nth-child(3) { height: 10px; animation-delay: 0.2s; }
 
-@keyframes pulseWave {
+@keyframes pulsoOnda {
   0%, 100% { transform: scaleY(0.7); }
   50% { transform: scaleY(1.2); }
 }
 
 /* 3 & 4. Secciones comunes */
-.sidebar-section {
+.seccion-barra-lateral {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.section-title-row {
+.fila-titulo-seccion {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.section-label {
+.etiqueta-seccion {
   font-size: 0.85rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.2px;
 }
 
-.badge-amigos {
-  background: rgba(245, 158, 11, 0.12);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  font-size: 0.65rem;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 12px;
-  letter-spacing: 0.5px;
-}
-
 /* Grid de amigos */
-.friends-grid-volt {
+.grilla-amigos-volt {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
-.friend-card {
+.tarjeta-amigo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,7 +232,7 @@ const entrenoStore = useEntrenamientoStore();
   cursor: pointer;
 }
 
-.friend-ring {
+.anillo-amigo {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -269,12 +242,12 @@ const entrenoStore = useEntrenamientoStore();
   overflow: hidden;
 }
 
-.friend-card:hover .friend-ring {
+.tarjeta-amigo:hover .anillo-amigo {
   border-color: #ff3b30;
   transform: scale(1.05);
 }
 
-.friend-photo {
+.foto-amigo {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -282,14 +255,14 @@ const entrenoStore = useEntrenamientoStore();
   display: block;
 }
 
-.friend-nickname {
+.apodo-amigo {
   font-size: 0.72rem;
   color: #a1a1aa;
   font-weight: 500;
 }
 
 /* Intereses */
-.interests-menu {
+.menu-intereses {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -298,7 +271,7 @@ const entrenoStore = useEntrenamientoStore();
   gap: 6px;
 }
 
-.interest-item {
+.elemento-interes {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -310,12 +283,12 @@ const entrenoStore = useEntrenamientoStore();
   transition: all 0.2s ease;
 }
 
-.interest-item:hover {
+.elemento-interes:hover {
   background: #1c1c20;
   border-color: #2e2e34;
 }
 
-.interest-icon-badge {
+.insignia-icono-interes {
   width: 26px;
   height: 26px;
   background: rgba(255, 59, 48, 0.15);
@@ -327,14 +300,14 @@ const entrenoStore = useEntrenamientoStore();
   font-size: 0.8rem;
 }
 
-.interest-name {
+.nombre-interes {
   font-size: 0.8rem;
   color: #d4d4d8;
   font-weight: 500;
 }
 
 /* 5. Widget Inferior Esta Semana */
-.sidebar-footer-widget {
+.widget-pie-barra-lateral {
   margin-top: auto;
   background: #141417;
   border: 1px solid #222226;
@@ -345,32 +318,32 @@ const entrenoStore = useEntrenamientoStore();
   gap: 8px;
 }
 
-.widget-eyebrow {
+.sobretitulo-widget {
   color: #eab308;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.8px;
 }
 
-.widget-metrics {
+.metricas-widget {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.widget-metric-item {
+.elemento-metrica-widget {
   display: flex;
   flex-direction: column;
 }
 
-.metric-num {
+.numero-metrica {
   font-size: 1.4rem;
   font-weight: 800;
   color: #ffffff;
   line-height: 1;
 }
 
-.metric-lbl {
+.etiqueta-metrica {
   color: #71717a;
   font-size: 0.72rem;
   font-weight: 500;

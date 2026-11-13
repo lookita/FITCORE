@@ -39,8 +39,8 @@ const diaActual = computed(() => {
 });
 
 // ─── FÓRMULA XP ───────────────────────────────────────────────────────────
-// XP/día  = 250 / días_elegidos
-// XP/ej   = XP/día / ejercicios_reales (siempre usa el conteo REAL de la lista)
+// XP-día  = 250 / días_elegidos
+// XP/ej   = XP-día / ejercicios_reales (siempre usa el conteo REAL de la lista)
 // Se muestra solo la parte entera; precisión completa para el backend.
 const xpPorEjercicioReal = computed(() => {
   const ejs = listaEjercicios.value.length || 1;
@@ -254,14 +254,14 @@ function volver() {
 
 <template>
 <div>
-    <main class="workout-wrap">
+    <main class="envoltura-entrenamiento">
 
     <!-- ── BARRA SUPERIOR ────────────────────────────────────────────── -->
-    <div class="topbar">
-      <button class="btn-volver" @click="volver">
+    <div class="barra-superior">
+      <button class="boton-volver" @click="volver">
         <i class="bi bi-arrow-left"></i> Volver
       </button>
-      <span class="nivel-pill">
+      <span class="pildora-nivel">
         <i class="bi bi-lightning-charge-fill"></i> Nivel {{ nivelUsuario }}
       </span>
     </div>
@@ -277,47 +277,47 @@ function volver() {
 
       <!-- ── PROGRESO GENERAL ──────────────────────────────────────── -->
       <div class="progreso-general">
-        <div class="pg-info">
-          <span class="eyebrow">SESIÓN EN PROGRESO</span>
-          <span class="pg-num">
+        <div class="pg-informacion">
+          <span class="sobretitulo">SESIÓN EN PROGRESO</span>
+          <span class="pg-numero">
             {{ ejercicioActualIndex + 1 }} / {{ listaEjercicios.length }} ejercicios
           </span>
         </div>
         <div class="pg-barra">
-          <div class="pg-fill" :style="{ width: `${progresoTotal}%` }"></div>
+          <div class="pg-relleno" :style="{ width: `${progresoTotal}%` }"></div>
         </div>
       </div>
 
       <!-- ── GRID PRINCIPAL ────────────────────────────────────────── -->
-      <div class="layout-principal">
+      <div class="diseño-principal">
 
         <!-- COLUMNA IZQUIERDA: lista de ejercicios -->
         <aside class="panel-lista">
           <p class="panel-titulo">Tu plan del día</p>
-          <div class="lista-ej">
+          <div class="lista-ejercicios">
             <button
               v-for="(ej, idx) in listaEjercicios"
               :key="ej.id"
-              class="item-ej"
+              class="elemento-ejercicio"
               :class="{
-                'item-activo':    idx === ejercicioActualIndex,
-                'item-hecho':     idx < ejercicioActualIndex
+                'elemento-activo': idx === ejercicioActualIndex,
+                'elemento-hecho':  idx < ejercicioActualIndex
               }"
               @click="ejercicioActualIndex = idx"
             >
-              <span class="item-num">{{ String(idx + 1).padStart(2, '0') }}</span>
-              <div class="item-texto">
-                <span class="item-nombre">{{ ej.nombre }}</span>
+              <span class="elemento-numero">{{ String(idx + 1).padStart(2, '0') }}</span>
+              <div class="elemento-texto">
+                <span class="elemento-nombre">{{ ej.nombre }}</span>
                 <img
                   v-if="ej.imagen_url"
-                  class="item-imagen"
+                  class="elemento-imagen"
                   :src="ej.imagen_url"
                   :alt="`Imagen de ${ej.nombre}`"
                   loading="lazy"
                 />
-                <span class="item-sub">{{ ej.series_objetivo }}×{{ ej.reps_objetivo }}</span>
+                <span class="elemento-sub">{{ ej.series_objetivo }}×{{ ej.reps_objetivo }}</span>
               </div>
-              <span class="item-estado">
+              <span class="elemento-estado">
                 {{ idx < ejercicioActualIndex ? '✓' : idx === ejercicioActualIndex ? '▶' : '·' }}
               </span>
             </button>
@@ -328,9 +328,9 @@ function volver() {
         <section class="panel-ejercicio" v-if="ejercicioActual">
 
           <!-- Cabecera del ejercicio -->
-          <div class="ej-header">
+          <div class="ej-cabecera">
             <div class="ej-maximo">
-              <span class="eyebrow">EJERCICIO ACTUAL</span>
+              <span class="sobretitulo">EJERCICIO ACTUAL</span>
               <h2 class="ej-titulo">{{ ejercicioActual.nombre }}</h2>
               <img
                 v-if="ejercicioActual.imagen_url"
@@ -346,61 +346,61 @@ function volver() {
 
           <!-- Desglose XP -->
           <div class="desglose-xp">
-            <div class="dxp-item">
-              <span class="dxp-label">XP por serie</span>
+            <div class="dxp-elemento">
+              <span class="dxp-etiqueta">XP por serie</span>
               <span class="dxp-valor">+{{ xpXSerieIndividual }}</span>
             </div>
-            <div class="dxp-sep"></div>
-            <div class="dxp-item">
-              <span class="dxp-label">XP por repetición</span>
+            <div class="dxp-separador"></div>
+            <div class="dxp-elemento">
+              <span class="dxp-etiqueta">XP por repetición</span>
               <span class="dxp-valor">+{{ xpXRepIndividual }}</span>
             </div>
-            <div class="dxp-sep"></div>
-            <div class="dxp-item">
-              <span class="dxp-label">Series × Reps obj.</span>
+            <div class="dxp-separador"></div>
+            <div class="dxp-elemento">
+              <span class="dxp-etiqueta">Series × Reps obj.</span>
               <span class="dxp-valor">{{ ejercicioActual.series_objetivo }}×{{ ejercicioActual.reps_objetivo }}</span>
             </div>
           </div>
 
           <!-- Timer de descanso -->
-          <div class="timer-bloque">
-            <div class="timer-row">
-              <span class="timer-label">DESCANSO</span>
-              <strong class="timer-valor">{{ segundos }}s</strong>
+          <div class="bloque-temporizador">
+            <div class="fila-temporizador">
+              <span class="etiqueta-temporizador">DESCANSO</span>
+              <strong class="valor-temporizador">{{ segundos }}s</strong>
             </div>
-            <div class="timer-barra">
+            <div class="barra-temporizador">
               <div
-                class="timer-fill"
+                class="relleno-temporizador"
                 :style="{ width: `${Math.min((segundos / 60) * 100, 100)}%` }"
               ></div>
             </div>
-            <div class="timer-botones">
-              <button class="timer-btn" @click="toggleTimer">
+            <div class="botones-temporizador">
+              <button class="boton-temporizador" @click="toggleTimer">
                 <i :class="`bi bi-${timerActivo ? 'pause-fill' : 'play-fill'}`"></i>
                 {{ timerActivo ? 'Pausar' : 'Iniciar' }}
               </button>
-              <button class="timer-btn" @click="segundos += 15">+15s</button>
-              <button class="timer-btn" @click="reiniciarCronometro">↺ Reset</button>
+              <button class="boton-temporizador" @click="segundos += 15">+15s</button>
+              <button class="boton-temporizador" @click="reiniciarCronometro">↺ Reset</button>
             </div>
           </div>
 
           <!-- TABLA DE SERIES (entrada manual) -->
-          <div class="series-bloque">
+          <div class="bloque-series">
             <div class="series-cabecera">
               <h3 class="series-titulo">Registrá tus series</h3>
               <div class="series-controles">
-                <button class="btn-ctrl" @click="quitarSerie" :disabled="seriesEjercicio.length <= 1">
+                <button class="boton-control" @click="quitarSerie" :disabled="seriesEjercicio.length <= 1">
                   <i class="bi bi-dash"></i>
                 </button>
-                <span class="series-count">{{ seriesEjercicio.length }} series</span>
-                <button class="btn-ctrl" @click="agregarSerie">
+                <span class="contador-series">{{ seriesEjercicio.length }} series</span>
+                <button class="boton-control" @click="agregarSerie">
                   <i class="bi bi-plus"></i>
                 </button>
               </div>
             </div>
 
             <!-- Cabecera de columnas -->
-            <div class="serie-col-header">
+            <div class="serie-cabecera-col">
               <span>Serie</span>
               <span>Repeticiones</span>
               <span>XP estimado</span>
@@ -414,19 +414,19 @@ function volver() {
               class="serie-fila"
               :class="{ 'serie-ok': serie.completada }"
             >
-              <span class="serie-num">{{ serie.numero }}</span>
+              <span class="serie-numero">{{ serie.numero }}</span>
 
               <!-- Input de repeticiones manual -->
-              <div class="reps-input-wrap">
-                <button class="reps-btn" @click="serie.reps = Math.max(0, serie.reps - 1)">-</button>
+              <div class="envoltura-entrada-reps">
+                <button class="boton-reps" @click="serie.reps = Math.max(0, serie.reps - 1)">-</button>
                 <input
                   v-model.number="serie.reps"
                   type="number"
-                  class="reps-input"
+                  class="entrada-reps"
                   min="0"
                   max="99"
                 />
-                <button class="reps-btn" @click="serie.reps++">+</button>
+                <button class="boton-reps" @click="serie.reps++">+</button>
               </div>
 
               <!-- XP estimado para esta serie -->
@@ -436,8 +436,8 @@ function volver() {
 
               <!-- Marcar completada -->
               <button
-                class="serie-check"
-                :class="{ 'check-ok': serie.completada }"
+                class="serie-verificar"
+                :class="{ 'verificar-ok': serie.completada }"
                 @click="marcarSerie(serie)"
               >
                 <i :class="`bi bi-${serie.completada ? 'check-lg' : 'circle'}`"></i>
@@ -445,16 +445,16 @@ function volver() {
             </div>
 
             <!-- Barra de progreso de series -->
-            <div class="series-prog">
+            <div class="progreso-series">
               <div class="sp-barra">
-                <div class="sp-fill" :style="{ width: `${progresoSeries}%` }"></div>
+                <div class="sp-relleno" :style="{ width: `${progresoSeries}%` }"></div>
               </div>
-              <span class="sp-txt">{{ seriesCompletadas }}/{{ seriesEjercicio.length }} series completadas</span>
+              <span class="sp-texto">{{ seriesCompletadas }}/{{ seriesEjercicio.length }} series completadas</span>
             </div>
           </div>
 
           <!-- Error -->
-          <p v-if="errorMsg" class="error-txt">⚠ {{ errorMsg }}</p>
+          <p v-if="errorMsg" class="error-texto">⚠ {{ errorMsg }}</p>
 
           <!-- Botón principal -->
           <button
@@ -479,7 +479,7 @@ function volver() {
 
     <!-- ── MODAL DE FINALIZACIÓN ─────────────────────────────────────── -->
     <transition name="fade">
-      <div v-if="modalVisible" class="modal-overlay" @click.self="volver">
+      <div v-if="modalVisible" class="superposicion-modal" @click.self="volver">
         <div class="modal-caja">
 
           <div class="modal-emoji">🏆</div>
@@ -487,15 +487,15 @@ function volver() {
           <p class="modal-sub">Excelente trabajo. Seguí así.</p>
 
           <!-- Stats -->
-          <div class="modal-stats">
-            <div class="mstat">
+          <div class="estadisticas-modal">
+            <div class="estadistica-modal">
               <span class="mstat-valor">+{{ Math.floor(resultado?.xp_ganado ?? 0) }}</span>
-              <span class="mstat-label">XP ganado hoy</span>
+              <span class="estadistica-etiqueta">XP ganado hoy</span>
             </div>
-            <div class="mstat-sep"></div>
-            <div class="mstat">
+            <div class="estadistica-separador"></div>
+            <div class="estadistica-modal">
               <span class="mstat-valor">{{ Math.floor(resultado?.xp_total_nuevo ?? 0) }}</span>
-              <span class="mstat-label">XP total acumulado</span>
+              <span class="estadistica-etiqueta">XP total acumulado</span>
             </div>
           </div>
 
@@ -506,25 +506,25 @@ function volver() {
           </p>
 
           <!-- Nivel up -->
-          <div v-if="resultado?.subio_de_nivel" class="modal-levelup">
+          <div v-if="resultado?.subio_de_nivel" class="modal-subida-nivel">
             🎉 ¡Subiste al Nivel {{ resultado.nivel_nuevo }}!
           </div>
 
           <!-- Barra XP hacia el próximo nivel -->
-          <div class="modal-xp-info">
+          <div class="modal-xp-informacion">
             <span>Progreso Nivel {{ resultado?.nivel_nuevo ?? auth.nivel }}</span>
             <span>{{ Math.floor((resultado?.xp_total_nuevo ?? 0) % 1000) }} / 1000 XP</span>
           </div>
           <div class="modal-xp-barra">
             <div
-              class="modal-xp-fill"
+              class="modal-xp-relleno"
               :style="{
                 width: `${Math.min(((resultado?.xp_total_nuevo ?? 0) % 1000) / 10, 100)}%`
               }"
             ></div>
           </div>
 
-          <button class="btn-modal" @click="volver">
+          <button class="boton-modal" @click="volver">
             Volver a mis sesiones
           </button>
         </div>
@@ -541,7 +541,7 @@ function volver() {
 
 <style scoped>
 /* ─── Variables ───────────────────────────────────────────────────────── */
-.workout-wrap {
+.envoltura-entrenamiento {
   min-height: 100vh;
   background: #0c0c0e;
   color: white;
@@ -550,7 +550,7 @@ function volver() {
   box-sizing: border-box;
 }
 
-.eyebrow {
+.sobretitulo {
   font-size: 11px;
   font-weight: 700;
   color: #ff3b30;
@@ -560,14 +560,14 @@ function volver() {
 }
 
 /* ─── Topbar ──────────────────────────────────────────────────────────── */
-.topbar {
+.barra-superior {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
   max-width: 1100px;
 }
-.btn-volver {
+.boton-volver {
   background: none;
   border: none;
   color: #71717a;
@@ -579,9 +579,9 @@ function volver() {
   gap: 6px;
   transition: color .2s;
 }
-.btn-volver:hover { color: white; }
+.boton-volver:hover { color: white; }
 
-.nivel-pill {
+.pildora-nivel {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -607,20 +607,20 @@ function volver() {
   max-width: 1100px;
   margin-bottom: 24px;
 }
-.pg-info {
+.pg-informacion {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 8px;
 }
-.pg-num { font-size: 14px; color: #9ca3af; }
+.pg-numero { font-size: 14px; color: #9ca3af; }
 .pg-barra {
   height: 6px;
   background: #222226;
   border-radius: 999px;
   overflow: hidden;
 }
-.pg-fill {
+.pg-relleno {
   height: 100%;
   background: linear-gradient(90deg, #ff3b30, #ff7a40);
   border-radius: 999px;
@@ -628,7 +628,7 @@ function volver() {
 }
 
 /* ─── Layout de dos columnas ──────────────────────────────────────────── */
-.layout-principal {
+.diseño-principal {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 20px;
@@ -636,7 +636,7 @@ function volver() {
   align-items: start;
 }
 @media (max-width: 800px) {
-  .layout-principal { grid-template-columns: 1fr; }
+  .diseño-principal { grid-template-columns: 1fr; }
   .panel-lista { order: 2; }
   .panel-ejercicio { order: 1; }
 }
@@ -659,9 +659,9 @@ function volver() {
   border-bottom: 1px solid #222226;
   margin: 0;
 }
-.lista-ej { display: flex; flex-direction: column; }
+.lista-ejercicios { display: flex; flex-direction: column; }
 
-.item-ej {
+.elemento-ejercicio {
   display: grid;
   grid-template-columns: 36px 1fr 20px;
   align-items: center;
@@ -676,15 +676,15 @@ function volver() {
   font-family: 'Rubik', sans-serif;
   transition: background .15s;
 }
-.item-ej:first-child { border-top: none; }
-.item-ej:hover { background: rgba(255,255,255,.03); }
-.item-activo {
+.elemento-ejercicio:first-child { border-top: none; }
+.elemento-ejercicio:hover { background: rgba(255,255,255,.03); }
+.elemento-activo {
   background: rgba(255,59,48,.07) !important;
   border-left: 2px solid #ff3b30;
 }
-.item-hecho { opacity: .5; }
+.elemento-hecho { opacity: .5; }
 
-.item-num {
+.elemento-numero {
   width: 32px;
   height: 32px;
   border-radius: 8px;
@@ -696,12 +696,12 @@ function volver() {
   align-items: center;
   justify-content: center;
 }
-.item-activo .item-num { color: #ff3b30; background: rgba(255,59,48,.12); }
-.item-hecho  .item-num { color: #22c55e; }
+.elemento-activo .elemento-numero { color: #ff3b30; background: rgba(255,59,48,.12); }
+.elemento-hecho  .elemento-numero { color: #22c55e; }
 
-.item-nombre { display: block; font-size: 13px; font-weight: 600; }
-.item-sub    { display: block; font-size: 11px; color: #71717a; margin-top: 1px; }
-.item-imagen {
+.elemento-nombre { display: block; font-size: 13px; font-weight: 600; }
+.elemento-sub    { display: block; font-size: 11px; color: #71717a; margin-top: 1px; }
+.elemento-imagen {
   display: block;
   width: min(100%, 180px);
   max-height: 100px;
@@ -709,9 +709,9 @@ function volver() {
   border-radius: 8px;
   margin-top: 8px;
 }
-.item-estado { font-size: 14px; color: #52525b; text-align: right; }
-.item-activo .item-estado { color: #ff3b30; }
-.item-hecho  .item-estado { color: #22c55e; }
+.elemento-estado { font-size: 14px; color: #52525b; text-align: right; }
+.elemento-activo .elemento-estado { color: #ff3b30; }
+.elemento-hecho  .elemento-estado { color: #22c55e; }
 
 /* ─── Panel ejercicio (derecha) ───────────────────────────────────────── */
 .panel-ejercicio {
@@ -725,12 +725,11 @@ function volver() {
 }
 
 /* Cabecera ejercicio */
-.ej-header {
+.ej-cabecera {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
-
 
 .ej-titulo {
   font-size: 26px;
@@ -744,19 +743,6 @@ function volver() {
   border-radius: 12px;
   margin-top: 16px;
 }
-.xp-total-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(234,179,8,.12);
-  border: 1px solid rgba(234,179,8,.25);
-  color: #eab308;
-  font-size: 16px;
-  font-weight: 800;
-  padding: 8px 14px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
 
 /* Desglose XP */
 .desglose-xp {
@@ -768,41 +754,41 @@ function volver() {
   padding: 14px 20px;
   gap: 0;
 }
-.dxp-item { flex: 1; text-align: center; }
-.dxp-label { display: block; font-size: 11px; color: #71717a; margin-bottom: 4px; }
+.dxp-elemento { flex: 1; text-align: center; }
+.dxp-etiqueta { display: block; font-size: 11px; color: #71717a; margin-bottom: 4px; }
 .dxp-valor { font-size: 18px; font-weight: 800; color: #eab308; }
-.dxp-sep { width: 1px; height: 32px; background: #222226; }
+.dxp-separador { width: 1px; height: 32px; background: #222226; }
 
 /* Timer */
-.timer-bloque {
+.bloque-temporizador {
   background: #18181b;
   border: 1px solid #222226;
   border-radius: 14px;
   padding: 18px 20px;
 }
-.timer-row {
+.fila-temporizador {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
-.timer-label { font-size: 11px; font-weight: 700; color: #52525b; letter-spacing: .08em; }
-.timer-valor { font-size: 28px; font-weight: 900; }
-.timer-barra {
+.etiqueta-temporizador { font-size: 11px; font-weight: 700; color: #52525b; letter-spacing: .08em; }
+.valor-temporizador { font-size: 28px; font-weight: 900; }
+.barra-temporizador {
   height: 6px;
   background: #222226;
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 14px;
 }
-.timer-fill {
+.relleno-temporizador {
   height: 100%;
   background: linear-gradient(90deg, #ff3b30, #ff7a40);
   border-radius: 999px;
   transition: width 1s linear;
 }
-.timer-botones { display: flex; gap: 10px; }
-.timer-btn {
+.botones-temporizador { display: flex; gap: 10px; }
+.boton-temporizador {
   flex: 1;
   background: #222226;
   border: 1px solid #2a2a2e;
@@ -819,10 +805,10 @@ function volver() {
   justify-content: center;
   gap: 6px;
 }
-.timer-btn:hover { background: #2c2c30; }
+.boton-temporizador:hover { background: #2c2c30; }
 
 /* Series */
-.series-bloque {
+.bloque-series {
   background: #18181b;
   border: 1px solid #222226;
   border-radius: 14px;
@@ -844,7 +830,7 @@ function volver() {
   align-items: center;
   gap: 8px;
 }
-.btn-ctrl {
+.boton-control {
   width: 30px;
   height: 30px;
   border-radius: 8px;
@@ -858,12 +844,12 @@ function volver() {
   justify-content: center;
   transition: background .15s;
 }
-.btn-ctrl:hover:not(:disabled) { background: #2c2c30; }
-.btn-ctrl:disabled { opacity: .3; cursor: not-allowed; }
-.series-count { font-size: 13px; color: #9ca3af; min-width: 60px; text-align: center; }
+.boton-control:hover:not(:disabled) { background: #2c2c30; }
+.boton-control:disabled { opacity: .3; cursor: not-allowed; }
+.contador-series { font-size: 13px; color: #9ca3af; min-width: 60px; text-align: center; }
 
 /* Cabecera de columnas */
-.serie-col-header {
+.serie-cabecera-col {
   display: grid;
   grid-template-columns: 36px 1fr 1fr 44px;
   align-items: center;
@@ -891,21 +877,21 @@ function volver() {
 }
 .serie-ok { border-color: rgba(34,197,94,.35); }
 
-.serie-num {
+.serie-numero {
   font-size: 13px;
   font-weight: 700;
   color: #52525b;
   text-align: center;
 }
-.serie-ok .serie-num { color: #22c55e; }
+.serie-ok .serie-numero { color: #22c55e; }
 
 /* Input de reps con +/- */
-.reps-input-wrap {
+.envoltura-entrada-reps {
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.reps-btn {
+.boton-reps {
   width: 28px;
   height: 28px;
   border-radius: 7px;
@@ -920,8 +906,8 @@ function volver() {
   transition: background .15s;
   flex-shrink: 0;
 }
-.reps-btn:hover { background: #2c2c30; }
-.reps-input {
+.boton-reps:hover { background: #2c2c30; }
+.entrada-reps {
   width: 44px;
   height: 36px;
   background: #0c0c0e;
@@ -933,12 +919,12 @@ function volver() {
   font-weight: 700;
   font-family: 'Rubik', sans-serif;
 }
-.reps-input:focus {
+.entrada-reps:focus {
   outline: none;
   border-color: #ff3b30;
 }
-.reps-input::-webkit-inner-spin-button,
-.reps-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.entrada-reps::-webkit-inner-spin-button,
+.entrada-reps::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 
 .serie-xp {
   font-size: 13px;
@@ -947,7 +933,7 @@ function volver() {
   text-align: center;
 }
 
-.serie-check {
+.serie-verificar {
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -961,10 +947,10 @@ function volver() {
   align-items: center;
   justify-content: center;
 }
-.check-ok { background: #22c55e; }
+.verificar-ok { background: #22c55e; }
 
 /* Barra de progreso series */
-.series-prog {
+.progreso-series {
   margin-top: 12px;
   display: flex;
   align-items: center;
@@ -977,16 +963,16 @@ function volver() {
   border-radius: 999px;
   overflow: hidden;
 }
-.sp-fill {
+.sp-relleno {
   height: 100%;
   background: #22c55e;
   border-radius: 999px;
   transition: width .3s ease;
 }
-.sp-txt { font-size: 12px; color: #9ca3af; white-space: nowrap; }
+.sp-texto { font-size: 12px; color: #9ca3af; white-space: nowrap; }
 
 /* Error */
-.error-txt { color: #f87171; font-size: 13px; text-align: center; margin: 0; }
+.error-texto { color: #f87171; font-size: 13px; text-align: center; margin: 0; }
 
 /* Botón principal */
 .btn-siguiente {
@@ -1024,7 +1010,7 @@ function volver() {
 }
 
 /* ─── MODAL ───────────────────────────────────────────────────────────── */
-.modal-overlay {
+.superposicion-modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.85);
@@ -1047,7 +1033,7 @@ function volver() {
 .modal-titulo { font-size: 26px; font-weight: 900; margin: 0 0 8px; }
 .modal-sub { color: #71717a; margin: 0 0 28px; }
 
-.modal-stats {
+.estadisticas-modal {
   display: flex;
   align-items: center;
   background: #18181b;
@@ -1056,17 +1042,17 @@ function volver() {
   padding: 20px;
   margin-bottom: 20px;
 }
-.mstat { flex: 1; }
+.estadistica-modal { flex: 1; }
 .mstat-valor {
   display: block;
   font-size: 26px;
   font-weight: 900;
   color: #eab308;
 }
-.mstat-label { display: block; font-size: 12px; color: #71717a; margin-top: 4px; }
-.mstat-sep { width: 1px; height: 40px; background: #222226; }
+.estadistica-etiqueta { display: block; font-size: 12px; color: #71717a; margin-top: 4px; }
+.estadistica-separador { width: 1px; height: 40px; background: #222226; }
 
-.modal-levelup {
+.modal-subida-nivel {
   background: rgba(34,197,94,.1);
   border: 1px solid rgba(34,197,94,.3);
   border-radius: 12px;
@@ -1076,7 +1062,7 @@ function volver() {
   margin-bottom: 20px;
 }
 
-.modal-xp-info {
+.modal-xp-informacion {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
@@ -1090,14 +1076,14 @@ function volver() {
   overflow: hidden;
   margin-bottom: 24px;
 }
-.modal-xp-fill {
+.modal-xp-relleno {
   height: 100%;
   background: linear-gradient(90deg, #eab308, #ff3b30);
   border-radius: 999px;
   transition: width .6s ease;
 }
 
-.btn-modal {
+.boton-modal {
   width: 100%;
   height: 52px;
   border: none;
@@ -1110,7 +1096,7 @@ function volver() {
   cursor: pointer;
   transition: opacity .2s;
 }
-.btn-modal:hover { opacity: .9; }
+.boton-modal:hover { opacity: .9; }
 
 /* ─── Transición fade ─────────────────────────────────────────────────── */
 .fade-enter-active, .fade-leave-active { transition: opacity .25s; }

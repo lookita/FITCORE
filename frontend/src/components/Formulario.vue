@@ -122,33 +122,12 @@ const enviar = (): void => {
   gap: 8px;
 }
 
-.etiqueta-roja {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 59, 48, 0.15);
-  color: #ff3b30;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  width: fit-content;
-  letter-spacing: 0.5px;
-}
-
 .titulo-tarjeta {
   font-size: 1.6rem;
   font-weight: 800;
   color: #ffffff;
   margin: 0;
   letter-spacing: -0.3px;
-}
-
-.subtitulo-tarjeta {
-  font-size: 0.88rem;
-  color: #a1a1aa;
-  margin: 0;
-  line-height: 1.4;
 }
 
 /* Formulario y campos */

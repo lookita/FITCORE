@@ -229,75 +229,10 @@ const abrirMenu = ref<boolean>(false);
   transform: translateX(3px);
 }
 
-/* Botón de rayitas para celular */
-.boton-rayitas {
-  display: none;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 8px;
-  width: 38px;
-  height: 38px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
-
-.boton-rayitas span {
-  width: 18px;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-}
-
-/* Menú que cae en el celular */
-.menu-celular {
-  position: absolute;
-  top: 75px;
-  right: 20px;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 200px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  z-index: 100;
-}
-
-.lista-celular {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.enlace-celular {
-  display: block;
-  padding: 10px 14px;
-  color: #d4d4d8;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.enlace-celular:hover {
-  background: #27272a;
-  color: #fff;
-}
-
 /* Celulares y tablets */
 @media (max-width: 992px) {
   .menu-grande {
     display: none;
-  }
-
-  .boton-rayitas {
-    display: flex;
   }
 
   .caja-barra {

@@ -16,6 +16,7 @@ export const useUsuarioVerificacion = defineStore('Autenticacion', {
         usuario: (state): Usuario | null => state.estadoSesion.usuarioConectado,
         nombre: (state): string => state.estadoSesion.usuarioConectado?.nombre || 'Atleta',
         nivel: (state): number => Number(state.estadoSesion.usuarioConectado?.nivel_actual || 1),
+        imagen_url: (state): number => Number(state.estadoSesion.usuarioConectado?.imagen_url || null),
         xpActual: (state): number => Number(state.estadoSesion.usuarioConectado?.xp_total || 0),
         xpSiguienteNivel: (state): number => {
             const nivel = Number(state.estadoSesion.usuarioConectado?.nivel_actual || 1);
